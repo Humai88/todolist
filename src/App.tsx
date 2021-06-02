@@ -22,11 +22,12 @@ function App() {
   }
 
   let tasksForTodoList = tasks;
+
   if (filter === "completed") {
-    tasksForTodoList = tasks.filter((elem) => elem.isDone === true);
+    tasksForTodoList = tasks.filter((elem) => !elem.isDone);
   }
   if (filter === "active") {
-    tasksForTodoList = tasks.filter((elem) => elem.isDone === false);
+    tasksForTodoList = tasks.filter((elem) => elem.isDone);
   }
 
   return (

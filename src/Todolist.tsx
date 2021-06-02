@@ -2,25 +2,25 @@ import React from "react";
 import { FaTimes } from "react-icons/fa";
 import { filterValuesType } from "./App";
 
-interface TaskType {
+type TaskType = {
   id: number;
   title: string;
   isDone: boolean;
-}
+};
 
-interface PropsType {
+type PropsType = {
   title: string;
   tasks: Array<TaskType>;
   removeTask: (id: number) => void;
   changeFilter: (value: filterValuesType) => void;
-}
+};
 
-export const Todolist: React.FC<PropsType> = ({
+export const Todolist = ({
   title,
   tasks,
   removeTask,
   changeFilter,
-}) => {
+}: PropsType) => {
   return (
     <div>
       <h3>{title}</h3>
