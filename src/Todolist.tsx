@@ -1,5 +1,5 @@
 import React from "react";
-import { FaTimes } from "react-icons/fa";
+import { FaTimes, FaPlus } from "react-icons/fa";
 import { filterValuesType } from "./App";
 
 type TaskType = {
@@ -21,23 +21,29 @@ export const Todolist = ({
   removeTask,
   changeFilter,
 }: PropsType) => {
+  const onAllClickHeandler = () => changeFilter("all");
+  const onActiveClickHeandler = () => changeFilter("active");
+  const onCompletedClickHeandler = () => changeFilter("completed");
+
   return (
     <div>
       <h3>{title}</h3>
       <div>
         <input />
+        <button>
+          <FaPlus />
+        </button>
       </div>
       <ul>
-        {tasks.map((elem) => {
+        {tasks.map((t) => {
+          const onRemoveHeandler = () => {
+            removeTask(t.id);
+          };
           return (
-            <li key={elem.id}>
-              <input type="checkbox" checked={elem.isDone} />
-              <span>{elem.title}</span>
-              <button
-                onClick={() => {
-                  removeTask(elem.id);
-                }}
-              >
+            <li key={t.id}>
+              <input type="checkbox" checked={t.isDone} />
+              <span>{t.title}</span>
+              <button onClick={onRemoveHeandler}>
                 <FaTimes style={{ color: "red" }} />
               </button>
             </li>
@@ -45,27 +51,9 @@ export const Todolist = ({
         })}
       </ul>
       <div>
-        <button
-          onClick={() => {
-            changeFilter("all");
-          }}
-        >
-          All
-        </button>
-        <button
-          onClick={() => {
-            changeFilter("active");
-          }}
-        >
-          Active
-        </button>
-        <button
-          onClick={() => {
-            changeFilter("completed");
-          }}
-        >
-          Completed
-        </button>
+        <button onClick={onAllClickHeandler}>All</button>
+        <button onClick={onActiveClickHeandler}>Active</button>
+        <button onClick={onCompletedClickHeandler}>Completed</button>
       </div>
     </div>
   );

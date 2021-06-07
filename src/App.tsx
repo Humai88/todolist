@@ -14,7 +14,7 @@ function App() {
   const [filter, setFilter] = useState<filterValuesType>("all");
 
   function removeTask(id: number) {
-    setTasks(tasks.filter((elem) => elem.id !== id));
+    setTasks(tasks.filter((t) => t.id !== id));
   }
 
   function changeFilter(value: filterValuesType) {
@@ -24,10 +24,10 @@ function App() {
   let tasksForTodoList = tasks;
 
   if (filter === "completed") {
-    tasksForTodoList = tasks.filter((elem) => !elem.isDone);
+    tasksForTodoList = tasks.filter((t) => !t.isDone);
   }
   if (filter === "active") {
-    tasksForTodoList = tasks.filter((elem) => elem.isDone);
+    tasksForTodoList = tasks.filter((t) => t.isDone);
   }
 
   return (
