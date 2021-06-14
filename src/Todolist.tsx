@@ -1,5 +1,5 @@
-import React from "react";
-// import { FaTimes, FaPlus } from "react-icons/fa";
+import React, { ChangeEvent } from "react";
+import { FaTimes } from "react-icons/fa";
 import { filterValuesType } from "./App";
 import { Button } from "./Components/Buttons/Button";
 import { Input } from "./Components/Inputs/Input";
@@ -16,6 +16,8 @@ type PropsType = {
   removeTask: (id: string) => void;
   changeFilter: (value: filterValuesType) => void;
   addTask: (title: string) => void;
+  checkboxChange: (taskId: string, isDone: boolean) => void;
+  filter: filterValuesType;
 };
 
 export const Todolist: React.FC<PropsType> = ({
@@ -24,38 +26,58 @@ export const Todolist: React.FC<PropsType> = ({
   removeTask,
   changeFilter,
   addTask,
+  checkboxChange,
+  filter,
 }) => {
-  const onAllClickHeandler = () => changeFilter("all");
-  const onActiveClickHeandler = () => changeFilter("active");
-  const onCompletedClickHeandler = () => changeFilter("completed");
+  const onAllClickHeandler = () => changeFilter("All");
+  const onActiveClickHeandler = () => changeFilter("Active");
+  const onCompletedClickHeandler = () => changeFilter("Completed");
 
   return (
     <div>
       <h3>{title}</h3>
       <div>
-        <Input callback={(title: string) => addTask(title)} />
+        <Input callback={addTask} />
       </div>
       <ul>
         {tasks.map((t) => {
           const onRemoveHeandler = () => {
             removeTask(t.id);
           };
+
+          const onCheckboxChangeHandler = (
+            e: ChangeEvent<HTMLInputElement>
+          ) => {
+            checkboxChange(t.id, e.currentTarget.checked);
+          };
           return (
             <li key={t.id}>
-              <input type="checkbox" checked={t.isDone} />
+              <input
+                type="checkbox"
+                checked={t.isDone}
+                onChange={onCheckboxChangeHandler}
+              />
               <span>{t.title}</span>
-              {/* <button onClick={onRemoveHeandler}>
-                <FaTimes style={{ color: "red" }} />
-              </button> */}
-              <Button title="x" callback={onRemoveHeandler} />
+              <Button
+                title={<FaTimes style={{ color: "red" }} />}
+                callback={onRemoveHeandler}
+              />
             </li>
           );
         })}
       </ul>
       <div>
-        <Button title="All" callback={onAllClickHeandler} />
-        <Button title="Active" callback={onActiveClickHeandler} />
-        <Button title="Completed" callback={onCompletedClickHeandler} />
+        <Button filter={filter} title="All" callback={onAllClickHeandler} />
+        <Button
+          filter={filter}
+          title="Active"
+          callback={onActiveClickHeandler}
+        />
+        <Button
+          filter={filter}
+          title="Completed"
+          callback={onCompletedClickHeandler}
+        />
       </div>
     </div>
   );
