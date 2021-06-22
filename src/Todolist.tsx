@@ -3,6 +3,7 @@ import { FaTimes } from "react-icons/fa";
 import { filterValuesType } from "./App";
 import { Button } from "./Components/Buttons/Button";
 import { Input } from "./Components/Inputs/Input";
+import "./App.css";
 
 type TaskType = {
   id: string;
@@ -51,7 +52,7 @@ export const Todolist: React.FC<PropsType> = ({
             checkboxChange(t.id, e.currentTarget.checked);
           };
           return (
-            <li key={t.id}>
+            <li key={t.id} className={t.isDone ? "isDone" : ""}>
               <input
                 type="checkbox"
                 checked={t.isDone}
