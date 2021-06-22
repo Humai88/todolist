@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from "react";
 import { FaTimes } from "react-icons/fa";
-import { filterValuesType } from "./App";
+import { FilterValuesType } from "./App";
 import { Button } from "./Components/Buttons/Button";
 import { InputAddContainer } from "./Components//Input&Add/InputAddContainer";
 import s from "./App.module.css";
@@ -15,10 +15,11 @@ type PropsType = {
   title: string;
   tasks: Array<TaskType>;
   removeTask: (id: string) => void;
-  changeFilter: (value: filterValuesType) => void;
+  changeFilter: (value: FilterValuesType, todoListId: string) => void;
   addTask: (title: string) => void;
   checkboxChange: (taskId: string, isDone: boolean) => void;
-  filter: filterValuesType;
+  filter: FilterValuesType;
+  id: string;
 };
 
 export const Todolist: React.FC<PropsType> = ({
@@ -29,13 +30,14 @@ export const Todolist: React.FC<PropsType> = ({
   addTask,
   checkboxChange,
   filter,
+  id,
 }) => {
-  const onAllClickHeandler = () => changeFilter("All");
-  const onActiveClickHeandler = () => changeFilter("Active");
-  const onCompletedClickHeandler = () => changeFilter("Completed");
+  const onAllClickHeandler = () => changeFilter("All", id);
+  const onActiveClickHeandler = () => changeFilter("Active", id);
+  const onCompletedClickHeandler = () => changeFilter("Completed", id);
 
   return (
-    <div>
+    <div className={s.wrapper}>
       <h3>{title}</h3>
       <div>
         <InputAddContainer callback={addTask} />
@@ -45,7 +47,6 @@ export const Todolist: React.FC<PropsType> = ({
           const onRemoveHeandler = () => {
             removeTask(t.id);
           };
-
           const onCheckboxChangeHandler = (
             e: ChangeEvent<HTMLInputElement>
           ) => {

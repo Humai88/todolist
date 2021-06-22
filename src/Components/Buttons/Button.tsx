@@ -1,6 +1,6 @@
 import React, { ButtonHTMLAttributes, DetailedHTMLProps } from "react";
 import s from "./Button.module.css";
-import { filterValuesType } from "./../../App";
+import { FilterValuesType } from "./../../App";
 
 type DefaultButtonPropsType = DetailedHTMLProps<
   ButtonHTMLAttributes<HTMLButtonElement>,
@@ -8,7 +8,7 @@ type DefaultButtonPropsType = DetailedHTMLProps<
 >;
 
 type propsType = DefaultButtonPropsType & {
-  filter?: filterValuesType;
+  filter?: FilterValuesType;
   red?: boolean;
 };
 
