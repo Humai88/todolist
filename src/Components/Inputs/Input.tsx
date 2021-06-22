@@ -1,48 +1,58 @@
-import React, { ChangeEvent, KeyboardEvent } from "react";
-import { FaPlus } from "react-icons/fa";
-import { useState } from "react";
+import React, {
+  ChangeEvent,
+  DetailedHTMLProps,
+  InputHTMLAttributes,
+  KeyboardEvent,
+} from "react";
+
 import s from "./Input.module.css";
 
-type propsType = {
-  callback: (title: string) => void;
+type DefaultInputPropsType = DetailedHTMLProps<
+  InputHTMLAttributes<HTMLInputElement>,
+  HTMLInputElement
+>;
+
+type PropsType = DefaultInputPropsType & {
+  onChangeText?: (value: string) => void;
+  onEnter?: () => void;
+  error?: string | null;
+  spanClassName?: string;
+  callback?: (title: string) => void;
 };
 
-export const Input: React.FC<propsType> = ({ callback }) => {
-  const [newTaskTitle, setNewTaskTitle] = useState<string>("");
-  const [error, setError] = useState<string | null>(null);
-
-  const onChangeHeandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setNewTaskTitle(e.currentTarget.value);
+export const Input: React.FC<PropsType> = ({
+  type,
+  onChange,
+  onChangeText,
+  onKeyPress,
+  onEnter,
+  callback,
+  className,
+  spanClassName,
+  error,
+  ...restProps
+}) => {
+  const onChangeCallback = (e: ChangeEvent<HTMLInputElement>) => {
+    onChange && onChange(e);
+    onChangeText && onChangeText(e.currentTarget.value);
   };
-
-  const onClickHeandler = () => {
-    if (newTaskTitle.trim() !== "") {
-      callback(newTaskTitle);
-      setNewTaskTitle("");
-    } else {
-      setError("Name is required!");
-    }
+  const onKeyPressCallback = (e: KeyboardEvent<HTMLInputElement>) => {
+    onKeyPress && onKeyPress(e);
+    onEnter && e.key === "Enter" && onEnter();
   };
+  const finalInputClassName = `${error ? s.errorInput : s.superInput} ${
+    className ? className : ""
+  }`;
 
-  const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-    setError(null);
-    if (e.key === "Enter") {
-      onClickHeandler();
-    }
-  };
   return (
     <>
       <input
-        className={error ? s.error : ""}
-        value={newTaskTitle}
-        onChange={onChangeHeandler}
-        onKeyPress={onKeyPressHandler}
+        type={"text"}
+        onChange={onChangeCallback}
+        onKeyPress={onKeyPressCallback}
+        className={finalInputClassName}
+        {...restProps}
       />
-
-      <button className={s.btn} onClick={onClickHeandler}>
-        <FaPlus />
-      </button>
-      {error && <span className={error ? s.errorMessage : ""}>{error}</span>}
     </>
   );
 };

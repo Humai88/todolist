@@ -1,23 +1,30 @@
-import React from "react";
+import React, { ButtonHTMLAttributes, DetailedHTMLProps } from "react";
 import s from "./Button.module.css";
 import { filterValuesType } from "./../../App";
 
-type propsType = {
-  callback: () => void;
-  title: string | Object;
+type DefaultButtonPropsType = DetailedHTMLProps<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  HTMLButtonElement
+>;
+
+type propsType = DefaultButtonPropsType & {
   filter?: filterValuesType;
+  red?: boolean;
 };
 
-export const Button: React.FC<propsType> = ({ callback, title, filter }) => {
-  const onClickHeandler = () => callback();
+export const Button: React.FC<propsType> = ({
+  title,
+  red,
+  filter,
+  className,
+  ...restProps
+}) => {
+  const finalStyles = `${className && className} ${red ? s.red : s.default} ${
+    filter === title ? s.activeFilter : ""
+  }`;
   return (
     <>
-      <button
-        className={filter === title ? s.activeFilter : ""}
-        onClick={onClickHeandler}
-      >
-        {title}
-      </button>
+      <button className={finalStyles} {...restProps} />
     </>
   );
 };

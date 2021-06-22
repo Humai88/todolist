@@ -2,8 +2,8 @@ import React, { ChangeEvent } from "react";
 import { FaTimes } from "react-icons/fa";
 import { filterValuesType } from "./App";
 import { Button } from "./Components/Buttons/Button";
-import { Input } from "./Components/Inputs/Input";
-import "./App.css";
+import { InputAddContainer } from "./Components//Input&Add/InputAddContainer";
+import s from "./App.module.css";
 
 type TaskType = {
   id: string;
@@ -38,7 +38,7 @@ export const Todolist: React.FC<PropsType> = ({
     <div>
       <h3>{title}</h3>
       <div>
-        <Input callback={addTask} />
+        <InputAddContainer callback={addTask} />
       </div>
       <ul>
         {tasks.map((t) => {
@@ -52,33 +52,34 @@ export const Todolist: React.FC<PropsType> = ({
             checkboxChange(t.id, e.currentTarget.checked);
           };
           return (
-            <li key={t.id} className={t.isDone ? "isDone" : ""}>
+            <li key={t.id} className={t.isDone ? s.isDone : ""}>
               <input
                 type="checkbox"
                 checked={t.isDone}
                 onChange={onCheckboxChangeHandler}
               />
               <span>{t.title}</span>
-              <Button
-                title={<FaTimes style={{ color: "red" }} />}
-                callback={onRemoveHeandler}
-              />
+              <Button red={true} onClick={onRemoveHeandler} title="Delete">
+                {<FaTimes style={{ color: "red" }} />}
+              </Button>
             </li>
           );
         })}
       </ul>
       <div>
-        <Button filter={filter} title="All" callback={onAllClickHeandler} />
-        <Button
-          filter={filter}
-          title="Active"
-          callback={onActiveClickHeandler}
-        />
+        <Button filter={filter} title="All" onClick={onAllClickHeandler}>
+          All
+        </Button>
+        <Button filter={filter} title="Active" onClick={onActiveClickHeandler}>
+          Active
+        </Button>
         <Button
           filter={filter}
           title="Completed"
-          callback={onCompletedClickHeandler}
-        />
+          onClick={onCompletedClickHeandler}
+        >
+          Completed
+        </Button>
       </div>
     </div>
   );

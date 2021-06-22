@@ -1,5 +1,5 @@
 import React from "react";
-import "./App.css";
+import s from "./App.module.css";
 import { Todolist } from "./Todolist";
 import { useState } from "react";
 import { v1 } from "uuid";
@@ -48,7 +48,7 @@ function App() {
   }
 
   return (
-    <div className="app">
+    <div className={s.app}>
       <Todolist
         filter={filter}
         title="What to learn"

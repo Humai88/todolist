@@ -1,0 +1,14 @@
+.errorMessage {
+  display: block;
+  color: rgb(251, 63, 63);
+  text-transform: uppercase;
+  margin-left: 1rem;
+  margin-top: 0.5rem;
+}
+
+.btnAdd {
+  background-color: #536890;
+}
+.btnAdd:hover {
+  background-color: #47597e;
+}
