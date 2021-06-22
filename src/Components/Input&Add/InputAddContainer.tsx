@@ -34,7 +34,7 @@ export const InputAddContainer: React.FC<PropsType> = ({ callback, id }) => {
   };
 
   return (
-    <>
+    <div className={s.wrapper}>
       <Input
         className={s.input}
         error={error}
@@ -48,6 +48,6 @@ export const InputAddContainer: React.FC<PropsType> = ({ callback, id }) => {
       </Button>
 
       {error && <span className={error ? s.errorMessage : ""}>{error}</span>}
-    </>
+    </div>
   );
 };

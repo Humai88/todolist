@@ -4,6 +4,7 @@ import { FilterValuesType } from "./App";
 import { Button } from "./Components/Buttons/Button";
 import { InputAddContainer } from "./Components//Input&Add/InputAddContainer";
 import s from "./App.module.css";
+import { Checkbox } from "./Components/Checkbox/Checkbox";
 
 export type TaskType = {
   id: string;
@@ -40,7 +41,7 @@ export const Todolist: React.FC<PropsType> = ({
   const onClickHandler = () => removeTodoList(id);
   return (
     <div className={s.wrapper}>
-      <h3>{title}</h3>
+      <h3 className={s.header}>{title}</h3>
       <div>
         <InputAddContainer id={id} callback={addTask} />
       </div>
@@ -56,43 +57,60 @@ export const Todolist: React.FC<PropsType> = ({
           };
           return (
             <li key={t.id} className={t.isDone ? s.isDone : ""}>
-              <input
+              <Checkbox
                 type="checkbox"
                 checked={t.isDone}
                 onChange={onCheckboxChangeHandler}
-              />
-              <span>{t.title}</span>
-              <Button red={true} onClick={onRemoveHandler} title="Delete">
+              >
+                {t.title}
+              </Checkbox>
+
+              <Button
+                className={s.btn}
+                red={true}
+                onClick={onRemoveHandler}
+                title="Delete"
+              >
                 {<FaTimes style={{ color: "red" }} />}
               </Button>
             </li>
           );
         })}
       </ul>
-      <div>
-        <Button filter={filter} title="All" onClick={onAllClickHandler}>
+      <div className={s.btnsWrapper}>
+        <Button
+          className={s.btn}
+          filter={filter}
+          title="All"
+          onClick={onAllClickHandler}
+        >
           All
         </Button>
-        <Button filter={filter} title="Active" onClick={onActiveClickHandler}>
+        <Button
+          className={s.btn}
+          filter={filter}
+          title="Active"
+          onClick={onActiveClickHandler}
+        >
           Active
         </Button>
         <Button
+          className={s.btn}
           filter={filter}
           title="Completed"
           onClick={onCompletedClickHandler}
         >
           Completed
         </Button>
-        <div>
-          <Button
-            title="RemoveAll"
-            className={s.removeAll}
-            red={true}
-            onClick={onClickHandler}
-          >
-            Remove all
-          </Button>
-        </div>
+
+        <Button
+          title="RemoveAll"
+          className={s.btn}
+          red={true}
+          onClick={onClickHandler}
+        >
+          Remove all
+        </Button>
       </div>
     </div>
   );

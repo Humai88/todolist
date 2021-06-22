@@ -24,9 +24,9 @@ function App() {
     {
       id: todoListId_2,
       title: "What to read",
-      filter: "Completed",
+      filter: "All",
     },
-    { id: todoListId_3, title: "What to learn", filter: "Active" },
+    { id: todoListId_3, title: "What to learn", filter: "All" },
   ]);
 
   const [tasks, setTasks] = useState<TaskStateType>({
