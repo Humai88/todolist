@@ -5,7 +5,7 @@ import { Button } from "./Components/Buttons/Button";
 import { InputAddContainer } from "./Components//Input&Add/InputAddContainer";
 import s from "./App.module.css";
 
-type TaskType = {
+export type TaskType = {
   id: string;
   title: string;
   isDone: boolean;
@@ -14,12 +14,13 @@ type TaskType = {
 type PropsType = {
   title: string;
   tasks: Array<TaskType>;
-  removeTask: (id: string) => void;
+  removeTask: (id: string, todoListId: string) => void;
   changeFilter: (value: FilterValuesType, todoListId: string) => void;
-  addTask: (title: string) => void;
-  checkboxChange: (taskId: string, isDone: boolean) => void;
+  addTask: (title: string, todoListId: string) => void;
+  checkboxChange: (taskId: string, isDone: boolean, todoListId: string) => void;
   filter: FilterValuesType;
   id: string;
+  removeTodoList: (todoListId: string) => void;
 };
 
 export const Todolist: React.FC<PropsType> = ({
@@ -31,26 +32,27 @@ export const Todolist: React.FC<PropsType> = ({
   checkboxChange,
   filter,
   id,
+  removeTodoList,
 }) => {
-  const onAllClickHeandler = () => changeFilter("All", id);
-  const onActiveClickHeandler = () => changeFilter("Active", id);
-  const onCompletedClickHeandler = () => changeFilter("Completed", id);
-
+  const onAllClickHandler = () => changeFilter("All", id);
+  const onActiveClickHandler = () => changeFilter("Active", id);
+  const onCompletedClickHandler = () => changeFilter("Completed", id);
+  const onClickHandler = () => removeTodoList(id);
   return (
     <div className={s.wrapper}>
       <h3>{title}</h3>
       <div>
-        <InputAddContainer callback={addTask} />
+        <InputAddContainer id={id} callback={addTask} />
       </div>
       <ul>
         {tasks.map((t) => {
-          const onRemoveHeandler = () => {
-            removeTask(t.id);
+          const onRemoveHandler = () => {
+            removeTask(t.id, id);
           };
           const onCheckboxChangeHandler = (
             e: ChangeEvent<HTMLInputElement>
           ) => {
-            checkboxChange(t.id, e.currentTarget.checked);
+            checkboxChange(t.id, e.currentTarget.checked, id);
           };
           return (
             <li key={t.id} className={t.isDone ? s.isDone : ""}>
@@ -60,7 +62,7 @@ export const Todolist: React.FC<PropsType> = ({
                 onChange={onCheckboxChangeHandler}
               />
               <span>{t.title}</span>
-              <Button red={true} onClick={onRemoveHeandler} title="Delete">
+              <Button red={true} onClick={onRemoveHandler} title="Delete">
                 {<FaTimes style={{ color: "red" }} />}
               </Button>
             </li>
@@ -68,19 +70,29 @@ export const Todolist: React.FC<PropsType> = ({
         })}
       </ul>
       <div>
-        <Button filter={filter} title="All" onClick={onAllClickHeandler}>
+        <Button filter={filter} title="All" onClick={onAllClickHandler}>
           All
         </Button>
-        <Button filter={filter} title="Active" onClick={onActiveClickHeandler}>
+        <Button filter={filter} title="Active" onClick={onActiveClickHandler}>
           Active
         </Button>
         <Button
           filter={filter}
           title="Completed"
-          onClick={onCompletedClickHeandler}
+          onClick={onCompletedClickHandler}
         >
           Completed
         </Button>
+        <div>
+          <Button
+            title="RemoveAll"
+            className={s.removeAll}
+            red={true}
+            onClick={onClickHandler}
+          >
+            Remove all
+          </Button>
+        </div>
       </div>
     </div>
   );

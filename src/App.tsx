@@ -1,6 +1,6 @@
 import React from "react";
 import s from "./App.module.css";
-import { Todolist } from "./Todolist";
+import { Todolist, TaskType } from "./Todolist";
 import { useState } from "react";
 import { v1 } from "uuid";
 
@@ -10,24 +10,55 @@ export type TodoListType = {
   title: string;
   filter: FilterValuesType;
 };
+export type TaskStateType = {
+  [key: string]: Array<TaskType>;
+};
 
 function App() {
-  const [tasks, setTasks] = useState([
-    { id: v1(), title: "HTML", isDone: true },
-    { id: v1(), title: "CSS", isDone: false },
-    { id: v1(), title: "JS", isDone: true },
+  const todoListId_1 = v1();
+  const todoListId_2 = v1();
+  const todoListId_3 = v1();
+
+  const [todoLists, setTodoLists] = useState<Array<TodoListType>>([
+    { id: todoListId_1, title: "What to buy", filter: "All" },
+    {
+      id: todoListId_2,
+      title: "What to read",
+      filter: "Completed",
+    },
+    { id: todoListId_3, title: "What to learn", filter: "Active" },
   ]);
 
-  const addTask = (title: string) => {
-    let newTask = { id: v1(), title: title, isDone: false };
-    let newTasks = [newTask, ...tasks];
-    setTasks(newTasks);
+  const [tasks, setTasks] = useState<TaskStateType>({
+    [todoListId_1]: [
+      { id: v1(), title: "Apple", isDone: true },
+      { id: v1(), title: "Rice", isDone: false },
+      { id: v1(), title: "Milk", isDone: true },
+      { id: v1(), title: "Pears", isDone: true },
+    ],
+    [todoListId_2]: [
+      { id: v1(), title: "Book", isDone: true },
+      { id: v1(), title: "News", isDone: false },
+      { id: v1(), title: "Newspaper", isDone: true },
+      { id: v1(), title: "Tutorials", isDone: true },
+    ],
+    [todoListId_3]: [
+      { id: v1(), title: "HTML", isDone: true },
+      { id: v1(), title: "React", isDone: false },
+      { id: v1(), title: "CSS", isDone: true },
+      { id: v1(), title: "JS", isDone: true },
+    ],
+  });
+
+  const addTask = (title: string, todoListId: string) => {
+    const newTask = { id: v1(), title: title, isDone: false };
+    tasks[todoListId] = [newTask, ...tasks[todoListId]];
+    setTasks({ ...tasks });
   };
 
-  // const [filter, setFilter] = useState<FilterValuesType>("All");
-
-  function removeTask(id: string) {
-    setTasks(tasks.filter((t) => t.id !== id));
+  function removeTask(id: string, todoListId: string) {
+    tasks[todoListId] = tasks[todoListId].filter((t) => t.id !== id);
+    setTasks({ ...tasks });
   }
 
   function changeFilter(value: FilterValuesType, todoListId: string) {
@@ -38,35 +69,30 @@ function App() {
     }
   }
 
-  function checkboxChange(taskId: string, isDone: boolean) {
-    let currentTask = tasks.find((t) => t.id === taskId);
-    if (currentTask) {
-      currentTask.isDone = isDone;
-    }
-    let newTasks = [...tasks];
-    setTasks(newTasks);
+  function checkboxChange(taskId: string, isDone: boolean, todoListId: string) {
+    tasks[todoListId] = tasks[todoListId].map((t) => {
+      if (t.id === taskId) {
+        return { ...t, isDone: isDone };
+      }
+      return t;
+    });
+    setTasks({ ...tasks });
   }
 
-  let [todoLists, setTodoLists] = useState<Array<TodoListType>>([
-    { id: v1(), title: "What to buy", filter: "All" },
-    {
-      id: v1(),
-      title: "What to read",
-      filter: "Completed",
-    },
-    { id: v1(), title: "What to learn", filter: "Active" },
-  ]);
+  function removeTodoList(todoListId: string) {
+    setTodoLists(todoLists.filter((tl) => tl.id !== todoListId));
+    delete tasks[todoListId];
+  }
 
   return (
     <div className={s.app}>
       {todoLists.map((tl) => {
-        let tasksForTodoList = tasks;
-
+        let tasksForTodoList = tasks[tl.id];
         if (tl.filter === "Completed") {
-          tasksForTodoList = tasks.filter((t) => t.isDone);
+          tasksForTodoList = tasks[tl.id].filter((t) => t.isDone);
         }
         if (tl.filter === "Active") {
-          tasksForTodoList = tasks.filter((t) => !t.isDone);
+          tasksForTodoList = tasks[tl.id].filter((t) => !t.isDone);
         }
         return (
           <Todolist
@@ -79,6 +105,7 @@ function App() {
             removeTask={removeTask}
             changeFilter={changeFilter}
             checkboxChange={checkboxChange}
+            removeTodoList={removeTodoList}
           />
         );
       })}

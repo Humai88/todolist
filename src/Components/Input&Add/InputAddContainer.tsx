@@ -6,19 +6,20 @@ import { Button } from "./../Buttons/Button";
 import s from "./InputAddContainer.module.css";
 
 type PropsType = {
-  callback: (title: string) => void;
+  callback: (title: string, todoListId: string) => void;
+  id: string;
 };
-export const InputAddContainer: React.FC<PropsType> = ({ callback }) => {
+export const InputAddContainer: React.FC<PropsType> = ({ callback, id }) => {
   const [newTaskTitle, setNewTaskTitle] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
 
-  const onChangeHeandler = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setNewTaskTitle(e.currentTarget.value);
   };
 
-  const onClickHeandler = () => {
+  const onClickHandler = () => {
     if (newTaskTitle.trim() !== "") {
-      callback(newTaskTitle);
+      callback(newTaskTitle, id);
       setNewTaskTitle("");
     } else {
       setError("Name is required!");
@@ -28,7 +29,7 @@ export const InputAddContainer: React.FC<PropsType> = ({ callback }) => {
   const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
     setError(null);
     if (e.key === "Enter") {
-      onClickHeandler();
+      onClickHandler();
     }
   };
 
@@ -38,13 +39,14 @@ export const InputAddContainer: React.FC<PropsType> = ({ callback }) => {
         className={s.input}
         error={error}
         value={newTaskTitle}
-        onChange={onChangeHeandler}
+        onChange={onChangeHandler}
         onKeyPress={onKeyPressHandler}
       />
 
-      <Button title="Add" className={s.btnAdd} onClick={onClickHeandler}>
+      <Button title="Add" className={s.btnAdd} onClick={onClickHandler}>
         <FaPlus />
       </Button>
+
       {error && <span className={error ? s.errorMessage : ""}>{error}</span>}
     </>
   );
