@@ -10,23 +10,24 @@ type PropsType = {
 };
 export const AddItem: React.FC<PropsType> = ({ callback }) => {
   const [newTaskTitle, setNewTaskTitle] = useState<string>("");
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<boolean>(false);
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setNewTaskTitle(e.currentTarget.value);
+    setError(false);
   };
 
   const onClickHandler = () => {
     if (newTaskTitle.trim() !== "") {
-      callback(newTaskTitle);
+      callback(newTaskTitle.trim());
       setNewTaskTitle("");
     } else {
-      setError("Name is required!");
+      setError(true);
     }
   };
 
   const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-    setError(null);
+    setError(false);
     if (e.key === "Enter") {
       onClickHandler();
     }
@@ -47,7 +48,9 @@ export const AddItem: React.FC<PropsType> = ({ callback }) => {
       </Button>
 
       {error && (
-        <span className={error ? styles.errorMessage : ""}>{error}</span>
+        <span className={error ? styles.errorMessage : ""}>
+          "Title is required!"
+        </span>
       )}
     </div>
   );

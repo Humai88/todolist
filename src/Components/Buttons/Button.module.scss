@@ -2,7 +2,7 @@
 @import "./../../scss/glabal.scss";
 
 .default {
-  padding: 9px 41px;
+  padding: 9px 27px;
   text-transform: uppercase;
   color: #464646;
   text-align: center;
@@ -10,6 +10,7 @@
   font-weight: 400;
   background-color: $color-button-default;
   border: none;
+  font-size: 12px;
 }
 .default:hover {
   color: $color-body;

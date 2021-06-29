@@ -85,13 +85,19 @@ function App() {
     delete tasks[todoListId];
   }
 
+  function addTodolist(title: string) {
+    let todolist: TodoListType = {
+      id: v1(),
+      filter: "All",
+      title: title,
+    };
+    setTodoLists([todolist, ...todoLists]);
+    setTasks({ ...tasks, [todolist.id]: [] });
+  }
+
   return (
     <div className={styles.app}>
-      <AddItem
-        callback={(title: string) => {
-          alert(title);
-        }}
-      />
+      <AddItem callback={addTodolist} />
       {todoLists.map((tl) => {
         let tasksForTodoList = tasks[tl.id];
         if (tl.filter === "Completed") {

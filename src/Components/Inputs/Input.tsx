@@ -15,7 +15,7 @@ type DefaultInputPropsType = DetailedHTMLProps<
 type PropsType = DefaultInputPropsType & {
   onChangeText?: (value: string) => void;
   onEnter?: () => void;
-  error?: string | null;
+  error?: boolean;
   spanClassName?: string;
   callback?: (title: string) => void;
 };
