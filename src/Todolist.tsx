@@ -5,6 +5,7 @@ import { Button } from "./Components/Buttons/Button";
 import { AddItem } from "./Components/AddItem/AddItem";
 import styles from "./Todolist.module.scss";
 import { Checkbox } from "./Components/Checkbox/Checkbox";
+import { EditableSpan } from "./Components/EditableSpan/EditableSpan";
 
 export type TaskType = {
   id: string;
@@ -22,6 +23,8 @@ type PropsType = {
   filter: FilterValuesType;
   id: string;
   removeTodoList: (todoListId: string) => void;
+  changeTaskTitle: (taskId: string, title: string, todoListId: string) => void;
+  changeTodoListTitle: (title: string, todoListId: string) => void;
 };
 
 export const Todolist: React.FC<PropsType> = ({
@@ -34,6 +37,8 @@ export const Todolist: React.FC<PropsType> = ({
   filter,
   id,
   removeTodoList,
+  changeTaskTitle,
+  changeTodoListTitle,
 }) => {
   const onAllClickHandler = () => changeFilter("All", id);
   const onActiveClickHandler = () => changeFilter("Active", id);
@@ -42,9 +47,17 @@ export const Todolist: React.FC<PropsType> = ({
   const addTaskItem = (title: string) => {
     addTask(title, id);
   };
+
+  const changeTodolistTitleHandler = (title: string) => {
+    changeTodoListTitle(title, id);
+  };
   return (
     <div className={styles.wrapper}>
-      <h3 className={styles.header}>{title}</h3>
+      <EditableSpan
+        className={styles.header}
+        title={title}
+        changeTaskTitle={changeTodolistTitleHandler}
+      />
       <div>
         <AddItem callback={addTaskItem} />
       </div>
@@ -58,6 +71,10 @@ export const Todolist: React.FC<PropsType> = ({
           ) => {
             checkboxChange(t.id, e.currentTarget.checked, id);
           };
+
+          const changeTaskTitleHandler = (title: string) => {
+            changeTaskTitle(t.id, title, id);
+          };
           return (
             <li key={t.id} className={t.isDone ? styles.isDone : ""}>
               <Checkbox
@@ -65,7 +82,10 @@ export const Todolist: React.FC<PropsType> = ({
                 checked={t.isDone}
                 onChange={onCheckboxChangeHandler}
               >
-                {t.title}
+                <EditableSpan
+                  changeTaskTitle={changeTaskTitleHandler}
+                  title={t.title}
+                />
               </Checkbox>
 
               <Button

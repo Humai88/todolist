@@ -1,0 +1,8 @@
+@import "./../../scss/glabal.scss";
+.input {
+  &:focus {
+    background-color: #334975;
+    color: $color-body;
+    font-size: 1.4rem;
+  }
+}

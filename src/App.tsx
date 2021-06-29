@@ -80,6 +80,16 @@ function App() {
     setTasks({ ...tasks });
   }
 
+  function changeTaskTitle(taskId: string, title: string, todoListId: string) {
+    tasks[todoListId] = tasks[todoListId].map((t) => {
+      if (t.id === taskId) {
+        return { ...t, title: title };
+      }
+      return t;
+    });
+    setTasks({ ...tasks });
+  }
+
   function removeTodoList(todoListId: string) {
     setTodoLists(todoLists.filter((tl) => tl.id !== todoListId));
     delete tasks[todoListId];
@@ -93,6 +103,16 @@ function App() {
     };
     setTodoLists([todolist, ...todoLists]);
     setTasks({ ...tasks, [todolist.id]: [] });
+  }
+
+  function changeTodoListTitle(title: string, todoListId: string) {
+    const updatedTodolist = todoLists.map((tl) => {
+      if (tl.id === todoListId) {
+        return { ...tl, title: title };
+      }
+      return tl;
+    });
+    setTodoLists(updatedTodolist);
   }
 
   return (
@@ -118,6 +138,8 @@ function App() {
             changeFilter={changeFilter}
             checkboxChange={checkboxChange}
             removeTodoList={removeTodoList}
+            changeTaskTitle={changeTaskTitle}
+            changeTodoListTitle={changeTodoListTitle}
           />
         );
       })}
