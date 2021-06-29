@@ -1,8 +1,9 @@
 import React from "react";
-import s from "./App.module.css";
+import styles from "./App.module.scss";
 import { Todolist, TaskType } from "./Todolist";
 import { useState } from "react";
 import { v1 } from "uuid";
+import { AddItem } from "./Components/AddItem/AddItem";
 
 export type FilterValuesType = "All" | "Completed" | "Active";
 export type TodoListType = {
@@ -85,14 +86,19 @@ function App() {
   }
 
   return (
-    <div className={s.app}>
+    <div className={styles.app}>
+      <AddItem
+        callback={(title: string) => {
+          alert(title);
+        }}
+      />
       {todoLists.map((tl) => {
         let tasksForTodoList = tasks[tl.id];
         if (tl.filter === "Completed") {
-          tasksForTodoList = tasks[tl.id].filter((t) => t.isDone);
+          tasksForTodoList = tasksForTodoList.filter((t) => t.isDone);
         }
         if (tl.filter === "Active") {
-          tasksForTodoList = tasks[tl.id].filter((t) => !t.isDone);
+          tasksForTodoList = tasksForTodoList.filter((t) => !t.isDone);
         }
         return (
           <Todolist

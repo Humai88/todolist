@@ -1,0 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap");
+@import "./scss/glabal.scss";
+* {
+  font-family: "Poppins";
+  color: $color-body;
+}
+body {
+  background-color: $color-background;
+}
+
+.app {
+  display: grid;
+  justify-content: space-between;
+  grid-template-columns: 33% 33% 33%;
+  padding: 2rem;
+}

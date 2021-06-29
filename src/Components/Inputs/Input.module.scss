@@ -1,16 +1,16 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap");
-* {
-  font-family: "Poppins";
-  color: #e1e8eb;
-}
+@import "./../../scss/glabal.scss";
 .superInput {
   color: black;
   height: 2rem;
   font-size: 1rem;
   margin-right: 5px;
+  outline: none;
   border: 1px solid #383838;
-  background-color: #dbe6fd;
+  background-color: $color-button-default;
   padding: 2px 7px;
+  &:focus {
+    background-color: $color-input-focus;
+  }
 }
 
 .errorInput {

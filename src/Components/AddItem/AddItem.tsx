@@ -1,15 +1,14 @@
 import React, { ChangeEvent, KeyboardEvent } from "react";
 import { FaPlus } from "react-icons/fa";
 import { useState } from "react";
-import { Input } from "./../Inputs/Input";
-import { Button } from "./../Buttons/Button";
-import s from "./InputAddContainer.module.css";
+import { Input } from "../Inputs/Input";
+import { Button } from "../Buttons/Button";
+import styles from "./AddItem.module.scss";
 
 type PropsType = {
-  callback: (title: string, todoListId: string) => void;
-  id: string;
+  callback: (title: string) => void;
 };
-export const InputAddContainer: React.FC<PropsType> = ({ callback, id }) => {
+export const AddItem: React.FC<PropsType> = ({ callback }) => {
   const [newTaskTitle, setNewTaskTitle] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
 
@@ -19,7 +18,7 @@ export const InputAddContainer: React.FC<PropsType> = ({ callback, id }) => {
 
   const onClickHandler = () => {
     if (newTaskTitle.trim() !== "") {
-      callback(newTaskTitle, id);
+      callback(newTaskTitle);
       setNewTaskTitle("");
     } else {
       setError("Name is required!");
@@ -34,20 +33,22 @@ export const InputAddContainer: React.FC<PropsType> = ({ callback, id }) => {
   };
 
   return (
-    <div className={s.wrapper}>
+    <div className={styles.wrapper}>
       <Input
-        className={s.input}
+        className={styles.input}
         error={error}
         value={newTaskTitle}
         onChange={onChangeHandler}
         onKeyPress={onKeyPressHandler}
       />
 
-      <Button title="Add" className={s.btnAdd} onClick={onClickHandler}>
+      <Button title="Add" className={styles.btnAdd} onClick={onClickHandler}>
         <FaPlus />
       </Button>
 
-      {error && <span className={error ? s.errorMessage : ""}>{error}</span>}
+      {error && (
+        <span className={error ? styles.errorMessage : ""}>{error}</span>
+      )}
     </div>
   );
 };

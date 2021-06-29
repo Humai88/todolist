@@ -1,5 +1,5 @@
 import React, { ButtonHTMLAttributes, DetailedHTMLProps } from "react";
-import s from "./Button.module.css";
+import styles from "./Button.module.scss";
 import { FilterValuesType } from "./../../App";
 
 type DefaultButtonPropsType = DetailedHTMLProps<
@@ -19,9 +19,9 @@ export const Button: React.FC<propsType> = ({
   className,
   ...restProps
 }) => {
-  const finalStyles = `${className && className} ${red ? s.red : s.default} ${
-    filter === title ? s.activeFilter : ""
-  }`;
+  const finalStyles = `${className && className} ${
+    red ? styles.red : styles.default
+  } ${filter === title ? styles.activeFilter : ""}`;
   return (
     <>
       <button className={finalStyles} {...restProps} />

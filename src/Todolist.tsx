@@ -2,8 +2,8 @@ import React, { ChangeEvent } from "react";
 import { FaTimes } from "react-icons/fa";
 import { FilterValuesType } from "./App";
 import { Button } from "./Components/Buttons/Button";
-import { InputAddContainer } from "./Components//Input&Add/InputAddContainer";
-import s from "./App.module.css";
+import { AddItem } from "./Components/AddItem/AddItem";
+import styles from "./Todolist.module.scss";
 import { Checkbox } from "./Components/Checkbox/Checkbox";
 
 export type TaskType = {
@@ -39,11 +39,14 @@ export const Todolist: React.FC<PropsType> = ({
   const onActiveClickHandler = () => changeFilter("Active", id);
   const onCompletedClickHandler = () => changeFilter("Completed", id);
   const onClickHandler = () => removeTodoList(id);
+  const addTaskItem = (title: string) => {
+    addTask(title, id);
+  };
   return (
-    <div className={s.wrapper}>
-      <h3 className={s.header}>{title}</h3>
+    <div className={styles.wrapper}>
+      <h3 className={styles.header}>{title}</h3>
       <div>
-        <InputAddContainer id={id} callback={addTask} />
+        <AddItem callback={addTaskItem} />
       </div>
       <ul>
         {tasks.map((t) => {
@@ -56,7 +59,7 @@ export const Todolist: React.FC<PropsType> = ({
             checkboxChange(t.id, e.currentTarget.checked, id);
           };
           return (
-            <li key={t.id} className={t.isDone ? s.isDone : ""}>
+            <li key={t.id} className={t.isDone ? styles.isDone : ""}>
               <Checkbox
                 type="checkbox"
                 checked={t.isDone}
@@ -66,7 +69,7 @@ export const Todolist: React.FC<PropsType> = ({
               </Checkbox>
 
               <Button
-                className={s.btn}
+                className={styles.btn}
                 red={true}
                 onClick={onRemoveHandler}
                 title="Delete"
@@ -77,9 +80,9 @@ export const Todolist: React.FC<PropsType> = ({
           );
         })}
       </ul>
-      <div className={s.btnsWrapper}>
+      <div className={styles.btnsWrapper}>
         <Button
-          className={s.btn}
+          className={styles.btn}
           filter={filter}
           title="All"
           onClick={onAllClickHandler}
@@ -87,7 +90,7 @@ export const Todolist: React.FC<PropsType> = ({
           All
         </Button>
         <Button
-          className={s.btn}
+          className={styles.btn}
           filter={filter}
           title="Active"
           onClick={onActiveClickHandler}
@@ -95,7 +98,7 @@ export const Todolist: React.FC<PropsType> = ({
           Active
         </Button>
         <Button
-          className={s.btn}
+          className={styles.btn}
           filter={filter}
           title="Completed"
           onClick={onCompletedClickHandler}
@@ -105,7 +108,7 @@ export const Todolist: React.FC<PropsType> = ({
 
         <Button
           title="RemoveAll"
-          className={s.btn}
+          className={styles.btn}
           red={true}
           onClick={onClickHandler}
         >

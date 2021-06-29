@@ -5,7 +5,7 @@ import React, {
   KeyboardEvent,
 } from "react";
 
-import s from "./Input.module.css";
+import styles from "./Input.module.scss";
 
 type DefaultInputPropsType = DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>,
@@ -40,9 +40,9 @@ export const Input: React.FC<PropsType> = ({
     onKeyPress && onKeyPress(e);
     onEnter && e.key === "Enter" && onEnter();
   };
-  const finalInputClassName = `${error ? s.errorInput : s.superInput} ${
-    className ? className : ""
-  }`;
+  const finalInputClassName = `${
+    error ? styles.errorInput : styles.superInput
+  } ${className ? className : ""}`;
 
   return (
     <>
