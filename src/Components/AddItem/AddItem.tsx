@@ -1,8 +1,8 @@
 import React, { ChangeEvent, KeyboardEvent } from "react";
-import { FaPlus } from "react-icons/fa";
+import { Button } from "./../Buttons/Button";
 import { useState } from "react";
 import { Input } from "../Inputs/Input";
-import { Button } from "../Buttons/Button";
+import { FaPlus } from "react-icons/fa";
 import styles from "./AddItem.module.scss";
 
 type PropsType = {
@@ -36,7 +36,6 @@ export const AddItem: React.FC<PropsType> = ({ callback }) => {
   return (
     <div className={styles.wrapper}>
       <Input
-        className={styles.input}
         error={error}
         value={newTaskTitle}
         onChange={onChangeHandler}

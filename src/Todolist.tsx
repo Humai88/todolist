@@ -1,10 +1,13 @@
 import React, { ChangeEvent } from "react";
-import { FaTimes } from "react-icons/fa";
+import { IconButton } from "@material-ui/core";
+import DeleteIcon from "@material-ui/icons/Delete";
 import { FilterValuesType } from "./App";
 import { Button } from "./Components/Buttons/Button";
 import { AddItem } from "./Components/AddItem/AddItem";
 import styles from "./Todolist.module.scss";
-import { Checkbox } from "./Components/Checkbox/Checkbox";
+// import Checkbox from "@material-ui/core/Checkbox";
+import { CheckboxElement } from "./Components/Checkbox/Checkbox";
+
 import { EditableSpan } from "./Components/EditableSpan/EditableSpan";
 
 export type TaskType = {
@@ -77,7 +80,7 @@ export const Todolist: React.FC<PropsType> = ({
           };
           return (
             <li key={t.id} className={t.isDone ? styles.isDone : ""}>
-              <Checkbox
+              <CheckboxElement
                 type="checkbox"
                 checked={t.isDone}
                 onChange={onCheckboxChangeHandler}
@@ -86,16 +89,16 @@ export const Todolist: React.FC<PropsType> = ({
                   changeTaskTitle={changeTaskTitleHandler}
                   title={t.title}
                 />
-              </Checkbox>
+              </CheckboxElement>
 
-              <Button
+              <IconButton
                 className={styles.btn}
-                red={true}
-                onClick={onRemoveHandler}
                 title="Delete"
+                onClick={onRemoveHandler}
+                aria-label="delete"
               >
-                {<FaTimes style={{ color: "red" }} />}
-              </Button>
+                <DeleteIcon />
+              </IconButton>
             </li>
           );
         })}
@@ -103,23 +106,23 @@ export const Todolist: React.FC<PropsType> = ({
       <div className={styles.btnsWrapper}>
         <Button
           className={styles.btn}
-          filter={filter}
           title="All"
           onClick={onAllClickHandler}
+          filter={filter}
         >
           All
         </Button>
         <Button
-          className={styles.btn}
           filter={filter}
+          className={styles.btn}
           title="Active"
           onClick={onActiveClickHandler}
         >
           Active
         </Button>
         <Button
-          className={styles.btn}
           filter={filter}
+          className={styles.btn}
           title="Completed"
           onClick={onCompletedClickHandler}
         >
