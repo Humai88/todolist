@@ -22,6 +22,7 @@ li {
   font-size: 1.8rem;
   font-weight: 600;
   color: $color-sand;
+  cursor: pointer;
 }
 .btnsWrapper {
   display: flex;
@@ -35,4 +36,7 @@ li {
 }
 .btnRed {
   background-color: $color-btn-red !important;
+}
+.span {
+  cursor: pointer;
 }

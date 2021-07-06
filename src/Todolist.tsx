@@ -86,6 +86,7 @@ export const Todolist: React.FC<PropsType> = ({
                 onChange={onCheckboxChangeHandler}
               >
                 <EditableSpan
+                  className={styles.span}
                   changeTaskTitle={changeTaskTitleHandler}
                   title={t.title}
                 />

@@ -8,7 +8,7 @@
 
 .btnAdd {
   background-color: #536890;
-  // justify-self: end;
+
   &:hover {
     background-color: #47597e;
   }
@@ -16,6 +16,7 @@
 
 .wrapper {
   display: grid;
+  margin-top: 1rem;
   justify-content: space-between;
   grid-template-columns: 82% 17%;
   grid-auto-rows: 2.4rem;

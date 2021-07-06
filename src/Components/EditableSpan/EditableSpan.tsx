@@ -1,6 +1,7 @@
 import React, { useState, ChangeEvent, KeyboardEvent } from "react";
 import styles from "./EditableSpan.module.scss";
 import { Input } from "./../Inputs/Input";
+import { FaEdit } from "react-icons/fa";
 type PropsType = {
   title: string;
   changeTaskTitle: (title: string) => void;
