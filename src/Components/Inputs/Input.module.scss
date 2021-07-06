@@ -1,11 +1,11 @@
 @import "./../../scss/glabal.scss";
 .superInput {
   color: black;
-  height: 2rem;
+  height: 2.2rem;
   font-size: 1rem;
   margin-right: 5px;
   outline: none;
-  border: 1px solid #383838;
+  border: none;
   background-color: $color-button-default;
   padding: 2px 7px;
   &:focus {
@@ -14,7 +14,7 @@
 }
 
 .errorInput {
-  border: 2px solid #ad0000;
+  border: 1px solid #ad0000;
   background: #e6a1a1;
   font-size: 1rem;
   height: 2rem;

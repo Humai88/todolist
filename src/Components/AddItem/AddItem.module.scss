@@ -7,10 +7,15 @@
 }
 
 .btnAdd {
-  background-color: #536890;
-
+  background-color: $color-btn-add;
+  width: 3rem;
+  padding: 9px;
+  border: none;
+  color: $color-body;
+  justify-self: end;
+  margin-left: 7rem;
   &:hover {
-    background-color: #47597e;
+    background-color: $color-btn-add-hover;
   }
 }
 
@@ -18,7 +23,6 @@
   display: grid;
   margin-top: 1rem;
   justify-content: space-between;
-  grid-template-columns: 82% 17%;
+  grid-template-columns: 87% 13%;
   grid-auto-rows: 2.4rem;
-  align-items: center;
 }

@@ -5,8 +5,8 @@ import { FilterValuesType } from "./App";
 import { Button } from "./Components/Buttons/Button";
 import { AddItem } from "./Components/AddItem/AddItem";
 import styles from "./Todolist.module.scss";
-// import Checkbox from "@material-ui/core/Checkbox";
 import { CheckboxElement } from "./Components/Checkbox/Checkbox";
+import BackspaceIcon from "@material-ui/icons/Backspace";
 
 import { EditableSpan } from "./Components/EditableSpan/EditableSpan";
 
@@ -28,6 +28,7 @@ type PropsType = {
   removeTodoList: (todoListId: string) => void;
   changeTaskTitle: (taskId: string, title: string, todoListId: string) => void;
   changeTodoListTitle: (title: string, todoListId: string) => void;
+  removeTitleHandler: (title: string) => void;
 };
 
 export const Todolist: React.FC<PropsType> = ({
@@ -42,6 +43,7 @@ export const Todolist: React.FC<PropsType> = ({
   removeTodoList,
   changeTaskTitle,
   changeTodoListTitle,
+  removeTitleHandler,
 }) => {
   const onAllClickHandler = () => changeFilter("All", id);
   const onActiveClickHandler = () => changeFilter("Active", id);
@@ -54,6 +56,9 @@ export const Todolist: React.FC<PropsType> = ({
   const changeTodolistTitleHandler = (title: string) => {
     changeTodoListTitle(title, id);
   };
+  const onDeleteTitle = () => {
+    removeTitleHandler(title);
+  };
   return (
     <div className={styles.wrapper}>
       <EditableSpan
@@ -61,6 +66,17 @@ export const Todolist: React.FC<PropsType> = ({
         title={title}
         changeTaskTitle={changeTodolistTitleHandler}
       />
+
+      <IconButton
+        size="small"
+        className={styles.btnRemove}
+        title="Delete"
+        onClick={onDeleteTitle}
+        aria-label="delete"
+      >
+        <BackspaceIcon />
+      </IconButton>
+
       <div>
         <AddItem callback={addTaskItem} />
       </div>
@@ -81,7 +97,6 @@ export const Todolist: React.FC<PropsType> = ({
           return (
             <li key={t.id} className={t.isDone ? styles.isDone : ""}>
               <CheckboxElement
-                type="checkbox"
                 checked={t.isDone}
                 onChange={onCheckboxChangeHandler}
               >
@@ -93,6 +108,7 @@ export const Todolist: React.FC<PropsType> = ({
               </CheckboxElement>
 
               <IconButton
+                size="small"
                 className={styles.btn}
                 title="Delete"
                 onClick={onRemoveHandler}
@@ -105,25 +121,14 @@ export const Todolist: React.FC<PropsType> = ({
         })}
       </ul>
       <div className={styles.btnsWrapper}>
-        <Button
-          className={styles.btn}
-          title="All"
-          onClick={onAllClickHandler}
-          filter={filter}
-        >
+        <Button filter={filter} title="All" onClick={onAllClickHandler}>
           All
         </Button>
-        <Button
-          filter={filter}
-          className={styles.btn}
-          title="Active"
-          onClick={onActiveClickHandler}
-        >
+        <Button filter={filter} title="Active" onClick={onActiveClickHandler}>
           Active
         </Button>
         <Button
           filter={filter}
-          className={styles.btn}
           title="Completed"
           onClick={onCompletedClickHandler}
         >
@@ -132,8 +137,7 @@ export const Todolist: React.FC<PropsType> = ({
 
         <Button
           title="RemoveAll"
-          className={styles.btn}
-          red={true}
+          className={styles.btnRed}
           onClick={onClickHandler}
         >
           Remove all

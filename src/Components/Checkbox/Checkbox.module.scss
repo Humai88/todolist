@@ -1,3 +1,7 @@
+@import "./../../scss//glabal.scss";
+* {
+  color: $color-background !important;
+}
 .checkbox {
   margin: 1rem;
 }

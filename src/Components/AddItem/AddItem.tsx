@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Input } from "../Inputs/Input";
 import { FaPlus } from "react-icons/fa";
 import styles from "./AddItem.module.scss";
+import { IconButton } from "@material-ui/core";
 
 type PropsType = {
   callback: (title: string) => void;
@@ -42,9 +43,9 @@ export const AddItem: React.FC<PropsType> = ({ callback }) => {
         onKeyPress={onKeyPressHandler}
       />
 
-      <Button title="Add" className={styles.btnAdd} onClick={onClickHandler}>
+      <button title="Add" className={styles.btnAdd} onClick={onClickHandler}>
         <FaPlus />
-      </Button>
+      </button>
 
       {error && (
         <span className={error ? styles.errorMessage : ""}>

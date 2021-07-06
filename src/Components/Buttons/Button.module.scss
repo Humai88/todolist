@@ -11,6 +11,7 @@
   background-color: $color-button-default;
   border: none;
   font-size: 12px;
+  margin-right: 5px;
 }
 .default:hover {
   color: $color-body;
@@ -21,22 +22,13 @@
   background-color: $color-sand;
   opacity: 0.6;
 }
-.red {
-  padding: 8px 20px;
-  border: none;
-  text-transform: uppercase;
-  text-align: center;
-  transition: all 0.15s;
-  font-weight: 400;
-  background-color: $color-btn-red;
-}
+
 .red:hover {
   background-color: $color-btn-red-hover;
   color: #ff9393;
   border: none;
 }
 .activeFilter {
-  color: $color-body;
   background-color: $color-sand;
   font-weight: 500;
 }

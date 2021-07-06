@@ -7,36 +7,43 @@ ul {
 }
 li {
   display: grid;
-  grid-template-columns: 80% 20%;
+  grid-template-columns: 90% 10%;
   justify-items: space-between;
 }
-.btn {
-  justify-self: center;
-  margin-bottom: 4px;
-}
+// .btn {
+//   justify-self: center;
+//   margin-bottom: 4px;
+// }
 .isDone {
   opacity: 0.7;
 }
 .header {
-  margin-left: 1rem;
-  font-size: 1.8rem;
+  font-size: 1.7rem;
   font-weight: 600;
   color: $color-sand;
   cursor: pointer;
 }
-.btnsWrapper {
-  display: flex;
-  justify-content: space-between;
-}
-.wrapper {
-  margin-left: 2rem;
-}
-.removeAll {
-  margin-top: 5px;
-}
+// .btnsWrapper {
+//   display: flex;
+//   justify-content: space-between;
+// }
+// .wrapper {
+//   margin-right: 2rem;
+
+// }
+
 .btnRed {
   background-color: $color-btn-red !important;
+  color: $color-body !important;
+  margin-right: 0px !important;
 }
 .span {
   cursor: pointer;
+}
+.btnDelete {
+  margin-left: 1rem;
+}
+.btnRemove {
+  margin-left: 1rem !important;
+  margin-bottom: 9px !important;
 }
