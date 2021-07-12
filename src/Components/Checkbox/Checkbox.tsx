@@ -1,31 +1,50 @@
-import Checkbox from "@material-ui/core/Checkbox";
 import React, {
+  ChangeEvent,
   DetailedHTMLProps,
   InputHTMLAttributes,
-  ChangeEvent,
 } from "react";
+import styles from "./Checkbox.module.scss";
 
+// тип пропсов обычного инпута
 type DefaultInputPropsType = DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>,
   HTMLInputElement
 >;
 
 type CheckboxPropsType = DefaultInputPropsType & {
-  checked: boolean;
-  children: React.ReactNode;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onChangeChecked?: (checked: boolean) => void;
+  spanClassName?: string;
 };
 
-export const CheckboxElement = ({ children }: CheckboxPropsType) => {
-  const [checked, setChecked] = React.useState(true);
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(event.target.checked);
+const Checkbox: React.FC<CheckboxPropsType> = ({
+  type,
+  onChange,
+  onChangeChecked,
+  className,
+  spanClassName,
+  children,
+  ...restProps
+}) => {
+  const onChangeCallback = (e: ChangeEvent<HTMLInputElement>) => {
+    onChange && onChange(e);
+    onChangeChecked && onChangeChecked(e.currentTarget.checked);
   };
+
+  const finalInputClassName = `${styles.checkbox} ${
+    className ? className : ""
+  }`;
 
   return (
     <label>
-      <Checkbox color={"primary"} onChange={handleChange} checked={checked} />
-      {children && <span>{children}</span>}
+      <input
+        type={"checkbox"}
+        onChange={onChangeCallback}
+        className={finalInputClassName}
+        {...restProps}
+      />
+      {children && <span className={styles.spanClassName}>{children}</span>}
     </label>
   );
 };
+
+export default Checkbox;

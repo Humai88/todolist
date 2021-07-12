@@ -23,11 +23,16 @@
   opacity: 0.6;
 }
 
-.red:hover {
-  background-color: $color-btn-red-hover;
-  color: #ff9393;
-  border: none;
+.red {
+  background-color: $color-btn-red;
+  color: $color-body;
+  &:hover {
+    background-color: $color-btn-red-hover;
+    color: #ff9393;
+    border: none;
+  }
 }
+
 .activeFilter {
   background-color: $color-sand;
   font-weight: 500;

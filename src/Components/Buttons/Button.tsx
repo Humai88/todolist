@@ -20,7 +20,7 @@ export const Button: React.FC<propsType> = ({
   ...restProps
 }) => {
   const finalStyles = `${className && className} ${
-    red ? styles.red : styles.default
+    red ? styles.red + " " + styles.default : styles.default
   } ${filter === title ? styles.activeFilter : ""}`;
   return (
     <>

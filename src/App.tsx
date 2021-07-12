@@ -151,7 +151,7 @@ function App() {
               tasksForTodoList = tasksForTodoList.filter((t) => !t.isDone);
             }
             return (
-              <Grid item>
+              <Grid item key={tl.id}>
                 <Paper
                   style={{ padding: "1rem" }}
                   className={styles.paper}

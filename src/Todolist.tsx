@@ -5,7 +5,8 @@ import { FilterValuesType } from "./App";
 import { Button } from "./Components/Buttons/Button";
 import { AddItem } from "./Components/AddItem/AddItem";
 import styles from "./Todolist.module.scss";
-import { CheckboxElement } from "./Components/Checkbox/Checkbox";
+import Checkbox from "./Components/Checkbox/Checkbox";
+
 import BackspaceIcon from "@material-ui/icons/Backspace";
 
 import { EditableSpan } from "./Components/EditableSpan/EditableSpan";
@@ -96,16 +97,13 @@ export const Todolist: React.FC<PropsType> = ({
           };
           return (
             <li key={t.id} className={t.isDone ? styles.isDone : ""}>
-              <CheckboxElement
-                checked={t.isDone}
-                onChange={onCheckboxChangeHandler}
-              >
+              <Checkbox checked={t.isDone} onChange={onCheckboxChangeHandler}>
                 <EditableSpan
                   className={styles.span}
                   changeTaskTitle={changeTaskTitleHandler}
                   title={t.title}
                 />
-              </CheckboxElement>
+              </Checkbox>
 
               <IconButton
                 size="small"
@@ -137,7 +135,8 @@ export const Todolist: React.FC<PropsType> = ({
 
         <Button
           title="RemoveAll"
-          className={styles.btnRed}
+          red
+          className={styles.btn}
           onClick={onClickHandler}
         >
           Remove all
