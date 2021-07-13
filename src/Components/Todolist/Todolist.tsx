@@ -1,17 +1,11 @@
 import React, { ChangeEvent } from "react";
 import { FaTrash } from "react-icons/fa";
-import { FilterValuesType } from "./../../App";
+import { FilterValuesType, TaskType } from "./../../App";
 import { Button } from "./../Buttons/Button";
 import { AddItem } from "./../AddItem/AddItem";
 import styles from "./Todolist.module.scss";
 import Checkbox from "./../Checkbox/Checkbox";
 import { EditableSpan } from "./../EditableSpan/EditableSpan";
-
-export type TaskType = {
-  id: string;
-  title: string;
-  isDone: boolean;
-};
 
 type PropsType = {
   title: string;
@@ -87,7 +81,7 @@ export const Todolist: React.FC<PropsType> = ({
                 />
               </Checkbox>
 
-              <div onClick={onRemoveHandler}>
+              <div className={styles.trash} onClick={onRemoveHandler}>
                 <FaTrash />
               </div>
             </li>

@@ -1,5 +1,4 @@
 import React, { useState, ChangeEvent, KeyboardEvent } from "react";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import styles from "./EditableSpan.module.scss";
 
@@ -9,16 +8,6 @@ type PropsType = {
   className?: string;
 };
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    input: {
-      fontSize: "1.1rem",
-      color: "#262c36",
-      opacity: 0.6,
-    },
-  })
-);
-
 export const EditableSpan: React.FC<PropsType> = ({
   title,
   changeTaskTitle,
@@ -26,7 +15,6 @@ export const EditableSpan: React.FC<PropsType> = ({
 }) => {
   const [editMode, setEditMode] = useState<boolean>(false);
   const [value, setValue] = useState<string>(title);
-  const classes = useStyles();
 
   const onEditMode = () => {
     setEditMode(true);
@@ -45,6 +33,7 @@ export const EditableSpan: React.FC<PropsType> = ({
       setEditMode(false);
     }
   };
+
   return editMode ? (
     <TextField
       className={styles.input}

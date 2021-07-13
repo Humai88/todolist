@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./App.module.scss";
-import { Todolist, TaskType } from "./Components/Todolist/Todolist";
+import { Todolist } from "./Components/Todolist/Todolist";
 import { useState } from "react";
 import { v1 } from "uuid";
 import { AddItem } from "./Components/AddItem/AddItem";
@@ -13,6 +13,12 @@ import MenuIcon from "@material-ui/icons/Menu";
 import { Container } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
+
+export type TaskType = {
+  id: string;
+  title: string;
+  isDone: boolean;
+};
 
 export type FilterValuesType = "All" | "Completed" | "Active";
 export type TodoListType = {
@@ -52,38 +58,6 @@ function App() {
     ],
   });
 
-  //* Tasks functions
-  const addTask = (title: string, todoListId: string) => {
-    const newTask = { id: v1(), title: title, isDone: false };
-    tasks[todoListId] = [newTask, ...tasks[todoListId]];
-    setTasks({ ...tasks });
-  };
-
-  function removeTask(id: string, todoListId: string) {
-    tasks[todoListId] = tasks[todoListId].filter((t) => t.id !== id);
-    setTasks({ ...tasks });
-  }
-
-  function checkboxChange(taskId: string, isDone: boolean, todoListId: string) {
-    tasks[todoListId] = tasks[todoListId].map((t) => {
-      if (t.id === taskId) {
-        return { ...t, isDone: isDone };
-      }
-      return t;
-    });
-    setTasks({ ...tasks });
-  }
-
-  function changeTaskTitle(taskId: string, title: string, todoListId: string) {
-    tasks[todoListId] = tasks[todoListId].map((t) => {
-      if (t.id === taskId) {
-        return { ...t, title: title };
-      }
-      return t;
-    });
-    setTasks({ ...tasks });
-  }
-
   //* Todolists functions
   function changeFilter(value: FilterValuesType, todoListId: string) {
     let todoList = todoLists.find((tl) => tl.id === todoListId);
@@ -116,6 +90,38 @@ function App() {
       return tl;
     });
     setTodoLists(updatedTodolist);
+  }
+
+  //* Tasks functions
+  const addTask = (title: string, todoListId: string) => {
+    const newTask = { id: v1(), title: title, isDone: false };
+    tasks[todoListId] = [newTask, ...tasks[todoListId]];
+    setTasks({ ...tasks });
+  };
+
+  function removeTask(id: string, todoListId: string) {
+    tasks[todoListId] = tasks[todoListId].filter((t) => t.id !== id);
+    setTasks({ ...tasks });
+  }
+
+  function checkboxChange(taskId: string, isDone: boolean, todoListId: string) {
+    tasks[todoListId] = tasks[todoListId].map((t) => {
+      if (t.id === taskId) {
+        return { ...t, isDone: isDone };
+      }
+      return t;
+    });
+    setTasks({ ...tasks });
+  }
+
+  function changeTaskTitle(taskId: string, title: string, todoListId: string) {
+    tasks[todoListId] = tasks[todoListId].map((t) => {
+      if (t.id === taskId) {
+        return { ...t, title: title };
+      }
+      return t;
+    });
+    setTasks({ ...tasks });
   }
 
   return (

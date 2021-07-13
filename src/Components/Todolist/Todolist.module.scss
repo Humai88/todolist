@@ -17,7 +17,10 @@ li {
 .header {
   font-size: 1.7rem;
   font-weight: 600;
-  color: $color-sand;
+  color: $color-sand !important;
+  cursor: pointer;
+}
+.trash {
   cursor: pointer;
 }
 .btnsWrapper {
