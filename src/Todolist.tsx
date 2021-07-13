@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from "react";
 import { IconButton } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
+import { FaTrash } from "react-icons/fa";
 import { FilterValuesType } from "./App";
 import { Button } from "./Components/Buttons/Button";
 import { AddItem } from "./Components/AddItem/AddItem";
@@ -104,15 +104,9 @@ export const Todolist: React.FC<PropsType> = ({
                 />
               </Checkbox>
 
-              <IconButton
-                size="small"
-                className={styles.btn}
-                title="Delete"
-                onClick={onRemoveHandler}
-                aria-label="delete"
-              >
-                <DeleteIcon />
-              </IconButton>
+              <div onClick={onRemoveHandler}>
+                <FaTrash />
+              </div>
             </li>
           );
         })}
