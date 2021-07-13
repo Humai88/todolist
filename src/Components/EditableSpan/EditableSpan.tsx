@@ -1,6 +1,7 @@
 import React, { useState, ChangeEvent, KeyboardEvent } from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
+import styles from "./EditableSpan.module.scss";
 
 type PropsType = {
   title: string;
@@ -46,7 +47,7 @@ export const EditableSpan: React.FC<PropsType> = ({
   };
   return editMode ? (
     <TextField
-      InputProps={{ className: classes.input }}
+      className={styles.input}
       autoFocus
       onChange={onChangeHandler}
       onBlur={offEditMode}

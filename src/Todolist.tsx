@@ -1,12 +1,10 @@
 import React, { ChangeEvent } from "react";
-import { IconButton } from "@material-ui/core";
 import { FaTrash } from "react-icons/fa";
 import { FilterValuesType } from "./App";
 import { Button } from "./Components/Buttons/Button";
 import { AddItem } from "./Components/AddItem/AddItem";
 import styles from "./Todolist.module.scss";
 import Checkbox from "./Components/Checkbox/Checkbox";
-import BackspaceIcon from "@material-ui/icons/Backspace";
 
 import { EditableSpan } from "./Components/EditableSpan/EditableSpan";
 
@@ -28,7 +26,6 @@ type PropsType = {
   removeTodoList: (todoListId: string) => void;
   changeTaskTitle: (taskId: string, title: string, todoListId: string) => void;
   changeTodoListTitle: (title: string, todoListId: string) => void;
-  removeTitleHandler: (title: string) => void;
 };
 
 export const Todolist: React.FC<PropsType> = ({
@@ -43,7 +40,6 @@ export const Todolist: React.FC<PropsType> = ({
   removeTodoList,
   changeTaskTitle,
   changeTodoListTitle,
-  removeTitleHandler,
 }) => {
   const onAllClickHandler = () => changeFilter("All", id);
   const onActiveClickHandler = () => changeFilter("Active", id);
@@ -56,9 +52,7 @@ export const Todolist: React.FC<PropsType> = ({
   const changeTodolistTitleHandler = (title: string) => {
     changeTodoListTitle(title, id);
   };
-  const onDeleteTitle = () => {
-    removeTitleHandler(title);
-  };
+
   return (
     <div className={styles.wrapper}>
       <EditableSpan
@@ -66,16 +60,6 @@ export const Todolist: React.FC<PropsType> = ({
         title={title}
         changeTaskTitle={changeTodolistTitleHandler}
       />
-
-      <IconButton
-        size="small"
-        className={styles.btnRemove}
-        title="Delete"
-        onClick={onDeleteTitle}
-        aria-label="delete"
-      >
-        <BackspaceIcon />
-      </IconButton>
 
       <div>
         <AddItem callback={addTaskItem} />

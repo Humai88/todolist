@@ -52,6 +52,7 @@ function App() {
     ],
   });
 
+  //* Tasks functions
   const addTask = (title: string, todoListId: string) => {
     const newTask = { id: v1(), title: title, isDone: false };
     tasks[todoListId] = [newTask, ...tasks[todoListId]];
@@ -61,14 +62,6 @@ function App() {
   function removeTask(id: string, todoListId: string) {
     tasks[todoListId] = tasks[todoListId].filter((t) => t.id !== id);
     setTasks({ ...tasks });
-  }
-
-  function changeFilter(value: FilterValuesType, todoListId: string) {
-    let todoList = todoLists.find((tl) => tl.id === todoListId);
-    if (todoList) {
-      todoList.filter = value;
-      setTodoLists([...todoLists]);
-    }
   }
 
   function checkboxChange(taskId: string, isDone: boolean, todoListId: string) {
@@ -89,6 +82,15 @@ function App() {
       return t;
     });
     setTasks({ ...tasks });
+  }
+
+  //* Todolists functions
+  function changeFilter(value: FilterValuesType, todoListId: string) {
+    let todoList = todoLists.find((tl) => tl.id === todoListId);
+    if (todoList) {
+      todoList.filter = value;
+      setTodoLists([...todoLists]);
+    }
   }
 
   function removeTodoList(todoListId: string) {
@@ -115,15 +117,6 @@ function App() {
     });
     setTodoLists(updatedTodolist);
   }
-  const removeTitleHandler = (title: string) => {
-    const titles = todoLists.map((tl) => {
-      if (tl.title === title) {
-        return { ...tl, title: "" };
-      }
-      return tl;
-    });
-    setTodoLists(titles);
-  };
 
   return (
     <React.Fragment>
@@ -153,8 +146,7 @@ function App() {
             return (
               <Grid item key={tl.id}>
                 <Paper
-                  style={{ padding: "1rem" }}
-                  className={styles.paper}
+                  style={{ padding: "1rem", backgroundColor: "#202d47" }}
                   elevation={0}
                   variant="outlined"
                 >
@@ -171,7 +163,6 @@ function App() {
                     removeTodoList={removeTodoList}
                     changeTaskTitle={changeTaskTitle}
                     changeTodoListTitle={changeTodoListTitle}
-                    removeTitleHandler={removeTitleHandler}
                   />
                 </Paper>
               </Grid>

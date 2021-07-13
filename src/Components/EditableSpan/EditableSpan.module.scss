@@ -2,9 +2,8 @@
 @import "./../../scss/glabal.scss";
 .input {
   &:focus {
-    // background-color: #334975;
-    color: $color-body;
-    font-size: 1.4rem;
-    font-family: "Poppins";
+    color: $color-body !important;
+    font-size: 1.4rem !important;
+    font-family: "Poppins" !important;
   }
 }
