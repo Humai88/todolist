@@ -1,12 +1,11 @@
 import React, { ChangeEvent } from "react";
 import { FaTrash } from "react-icons/fa";
-import { FilterValuesType } from "./App";
-import { Button } from "./Components/Buttons/Button";
-import { AddItem } from "./Components/AddItem/AddItem";
+import { FilterValuesType } from "./../../App";
+import { Button } from "./../Buttons/Button";
+import { AddItem } from "./../AddItem/AddItem";
 import styles from "./Todolist.module.scss";
-import Checkbox from "./Components/Checkbox/Checkbox";
-
-import { EditableSpan } from "./Components/EditableSpan/EditableSpan";
+import Checkbox from "./../Checkbox/Checkbox";
+import { EditableSpan } from "./../EditableSpan/EditableSpan";
 
 export type TaskType = {
   id: string;
