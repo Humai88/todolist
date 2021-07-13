@@ -1,10 +1,9 @@
 import React, { ChangeEvent, KeyboardEvent } from "react";
 import { Button } from "./../Buttons/Button";
 import { useState } from "react";
-import { Input } from "../Inputs/Input";
+import { Input } from "../Input/Input";
 import { FaPlus } from "react-icons/fa";
 import styles from "./AddItem.module.scss";
-import { IconButton } from "@material-ui/core";
 
 type PropsType = {
   callback: (title: string) => void;
@@ -37,15 +36,16 @@ export const AddItem: React.FC<PropsType> = ({ callback }) => {
   return (
     <div className={styles.wrapper}>
       <Input
+        className={styles.input}
         error={error}
         value={newTaskTitle}
         onChange={onChangeHandler}
         onKeyPress={onKeyPressHandler}
       />
 
-      <button title="Add" className={styles.btnAdd} onClick={onClickHandler}>
+      <Button title="Add" className={styles.btnAdd} onClick={onClickHandler}>
         <FaPlus />
-      </button>
+      </Button>
 
       {error && (
         <span className={error ? styles.errorMessage : ""}>

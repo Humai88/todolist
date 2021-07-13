@@ -10,10 +10,7 @@ li {
   grid-template-columns: 90% 10%;
   justify-items: space-between;
 }
-// .btn {
-//   justify-self: center;
-//   margin-bottom: 4px;
-// }
+
 .isDone {
   opacity: 0.7;
 }
@@ -23,14 +20,14 @@ li {
   color: $color-sand;
   cursor: pointer;
 }
-// .btnsWrapper {
-//   display: flex;
-//   justify-content: space-between;
-// }
-// .wrapper {
-//   margin-right: 2rem;
-
-// }
+.btnsWrapper {
+  display: grid;
+  grid-template-columns: repeat(4, 25%);
+}
+.filterBtns {
+  // justify-self: center;
+  padding: 7px 4px;
+}
 .span {
   cursor: pointer;
 }

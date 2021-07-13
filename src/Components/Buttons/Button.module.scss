@@ -14,7 +14,7 @@
   margin-right: 5px;
 }
 .default:hover {
-  color: $color-body;
+  color: $color-body !important;
   background-color: $color-sand;
 }
 .default:disabled {
@@ -25,10 +25,10 @@
 
 .red {
   background-color: $color-btn-red;
-  color: $color-body;
+  color: #fdc3c3 !important;
   &:hover {
     background-color: $color-btn-red-hover;
-    color: #ff9393;
+    color: #ff9393 !important;
     border: none;
   }
 }

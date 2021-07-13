@@ -1,11 +1,13 @@
 @import "./../../scss/glabal.scss";
 .errorMessage {
   display: block;
-  color: $color-btn-red;
+  color: $color-btn-red !important;
   text-transform: uppercase;
   margin-top: 0.5rem;
 }
-
+.input {
+  width: 17rem;
+}
 .btnAdd {
   background-color: $color-btn-add;
   width: 3rem;
@@ -13,7 +15,7 @@
   border: none;
   color: $color-body;
   justify-self: end;
-  margin-left: 7rem;
+  // margin-left: 7rem;
   &:hover {
     background-color: $color-btn-add-hover;
   }

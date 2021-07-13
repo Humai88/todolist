@@ -6,7 +6,6 @@ import { Button } from "./Components/Buttons/Button";
 import { AddItem } from "./Components/AddItem/AddItem";
 import styles from "./Todolist.module.scss";
 import Checkbox from "./Components/Checkbox/Checkbox";
-
 import BackspaceIcon from "@material-ui/icons/Backspace";
 
 import { EditableSpan } from "./Components/EditableSpan/EditableSpan";
@@ -119,13 +118,24 @@ export const Todolist: React.FC<PropsType> = ({
         })}
       </ul>
       <div className={styles.btnsWrapper}>
-        <Button filter={filter} title="All" onClick={onAllClickHandler}>
+        <Button
+          className={styles.filterBtns}
+          filter={filter}
+          title="All"
+          onClick={onAllClickHandler}
+        >
           All
         </Button>
-        <Button filter={filter} title="Active" onClick={onActiveClickHandler}>
+        <Button
+          className={styles.filterBtns}
+          filter={filter}
+          title="Active"
+          onClick={onActiveClickHandler}
+        >
           Active
         </Button>
         <Button
+          className={styles.filterBtns}
           filter={filter}
           title="Completed"
           onClick={onCompletedClickHandler}
@@ -134,9 +144,9 @@ export const Todolist: React.FC<PropsType> = ({
         </Button>
 
         <Button
+          className={styles.filterBtns}
           title="RemoveAll"
           red
-          className={styles.btn}
           onClick={onClickHandler}
         >
           Remove all

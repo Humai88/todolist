@@ -14,9 +14,7 @@ body {
 .addItem {
   margin: 1rem;
 }
-// .app {
-//   display: grid;
-//   justify-content: space-between;
-//   grid-template-columns: 25% 25% 25% 25%;
-//   padding: 2rem;
-// }
+.navbar {
+  background-color: $color-sand;
+  color: $color-body !important;
+}

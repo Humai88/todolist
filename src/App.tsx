@@ -128,7 +128,7 @@ function App() {
   return (
     <React.Fragment>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar className={styles.navbar}>
           <IconButton edge="start" color="inherit" aria-label="menu">
             <MenuIcon />
           </IconButton>
