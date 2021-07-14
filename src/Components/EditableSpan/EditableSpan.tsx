@@ -24,7 +24,7 @@ export const EditableSpan: React.FC<PropsType> = ({
   };
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (value) {
-      changeTaskTitle(value);
+      changeTaskTitle(e.currentTarget.value);
     }
     setValue(e.currentTarget.value);
   };
