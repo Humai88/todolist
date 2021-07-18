@@ -19,14 +19,17 @@ export const EditableSpan: React.FC<PropsType> = ({
   const onEditMode = () => {
     setEditMode(true);
   };
+
   const offEditMode = () => {
     setEditMode(false);
   };
+
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.currentTarget.value;
     if (value) {
-      changeTaskTitle(e.currentTarget.value);
+      changeTaskTitle(newValue);
     }
-    setValue(e.currentTarget.value);
+    setValue(newValue);
   };
   const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
