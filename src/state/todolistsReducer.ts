@@ -16,14 +16,14 @@ export const todolistsReducer = (
       }
       return state;
     case "REMOVE_TODOLIST":
-      return state.filter((tl) => tl.id !== action.payload);
+      return state.filter((tl) => tl.id !== action.payload.todoListId);
     case "ADD_TODOLIST":
       return [
         ...state,
         {
-          id: v1(),
+          id: action.payload.todolistId,
           filter: "All",
-          title: action.payload,
+          title: action.payload.title,
         },
       ];
     case "CHANGE_TODOLIST_TITLE":
@@ -47,13 +47,18 @@ export type ActionTodolistsTypes =
 export const addTodolistAC = (title: string) => {
   return {
     type: "ADD_TODOLIST",
-    payload: title,
+    payload: {
+      title: title,
+      todolistId: v1(),
+    },
   } as const;
 };
 export const removeTodolistAC = (todoListId: string) => {
   return {
     type: "REMOVE_TODOLIST",
-    payload: todoListId,
+    payload: {
+      todoListId: todoListId,
+    },
   } as const;
 };
 export const changeFilterAC = (value: FilterValuesType, todoListId: string) => {

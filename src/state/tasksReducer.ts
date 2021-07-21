@@ -1,5 +1,6 @@
 import { TaskStateType } from "./../App";
 import { v1 } from "uuid";
+import { ActionTodolistsTypes } from "./todolistsReducer";
 
 export const tasksReducer = (
   state: TaskStateType,
@@ -39,6 +40,18 @@ export const tasksReducer = (
         }
       );
       return { ...state };
+
+    case "ADD_TODOLIST":
+      return {
+        ...state,
+        [action.payload.todolistId]: [],
+      };
+
+    case "REMOVE_TODOLIST":
+      const copy = { ...state };
+      delete copy[action.payload.todoListId];
+      return copy;
+
     default:
       throw new Error("I dont understand this action type");
   }
@@ -48,7 +61,8 @@ export type ActionTasksTypes =
   | ReturnType<typeof addTaskAC>
   | ReturnType<typeof removeTaskAC>
   | ReturnType<typeof statusChangeAC>
-  | ReturnType<typeof changeTaskTitleAC>;
+  | ReturnType<typeof changeTaskTitleAC>
+  | ActionTodolistsTypes;
 
 export const addTaskAC = (title: string, todoListId: string) => {
   return {
