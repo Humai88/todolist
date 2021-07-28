@@ -9,26 +9,32 @@ import { v1 } from "uuid";
 import { TaskStateType } from "./../App";
 import { addTodolistAC } from "./todolistsReducer";
 
-test("correct task should be added", () => {
-  const todoListId_1 = v1();
-  const todoListId_2 = v1();
+let todoListId_1: string;
+let todoListId_2: string;
+let startState: TaskStateType;
 
-  let newTask = "Buy milk";
+beforeEach(() => {
+  todoListId_1 = v1();
+  todoListId_2 = v1();
 
-  const startState: TaskStateType = {
+  startState = {
     [todoListId_1]: [
-      { id: v1(), title: "Apple", isDone: true },
-      { id: v1(), title: "Rice", isDone: false },
-      { id: v1(), title: "Milk", isDone: true },
-      { id: v1(), title: "Pears", isDone: true },
+      { id: "5", title: "Apple", isDone: true },
+      { id: "6", title: "Rice", isDone: false },
+      { id: "7", title: "Milk", isDone: true },
+      { id: "8", title: "Pears", isDone: true },
     ],
     [todoListId_2]: [
-      { id: v1(), title: "Book", isDone: true },
-      { id: v1(), title: "News", isDone: false },
-      { id: v1(), title: "Newspaper", isDone: true },
-      { id: v1(), title: "Tutorials", isDone: true },
+      { id: "1", title: "Book", isDone: true },
+      { id: "2", title: "News", isDone: false },
+      { id: "3", title: "Newspaper", isDone: true },
+      { id: "4", title: "Tutorials", isDone: true },
     ],
   };
+});
+
+test("correct task should be added", () => {
+  let newTask = "Buy milk";
 
   const endState = tasksReducer(startState, addTaskAC(newTask, todoListId_2));
 
@@ -37,61 +43,16 @@ test("correct task should be added", () => {
 });
 
 test("correct task should be removed", () => {
-  const todoListId_1 = v1();
-  const todoListId_2 = v1();
-  const taskId_1 = v1();
-  const taskId_2 = v1();
-  const taskId_3 = v1();
-  const taskId_4 = v1();
-
-  const startState: TaskStateType = {
-    [todoListId_1]: [
-      { id: v1(), title: "Apple", isDone: true },
-      { id: v1(), title: "Rice", isDone: false },
-      { id: v1(), title: "Milk", isDone: true },
-    ],
-    [todoListId_2]: [
-      { id: taskId_1, title: "Book", isDone: true },
-      { id: taskId_2, title: "News", isDone: false },
-      { id: taskId_3, title: "Newspaper", isDone: true },
-      { id: taskId_4, title: "Tutorials", isDone: true },
-    ],
-  };
-
-  const endState = tasksReducer(
-    startState,
-    removeTaskAC(todoListId_2, taskId_2)
-  );
+  const endState = tasksReducer(startState, removeTaskAC("2", todoListId_2));
 
   expect(endState[todoListId_2].length).toBe(3);
   expect(endState[todoListId_2][1].title).toBe("Newspaper");
 });
 
 test("correct task should change status", () => {
-  const todoListId_1 = v1();
-  const todoListId_2 = v1();
-  const taskId_1 = v1();
-  const taskId_2 = v1();
-  const taskId_3 = v1();
-  const taskId_4 = v1();
-
-  const startState: TaskStateType = {
-    [todoListId_1]: [
-      { id: v1(), title: "Apple", isDone: true },
-      { id: v1(), title: "Rice", isDone: false },
-      { id: v1(), title: "Milk", isDone: true },
-    ],
-    [todoListId_2]: [
-      { id: taskId_1, title: "Book", isDone: true },
-      { id: taskId_2, title: "News", isDone: false },
-      { id: taskId_3, title: "Newspaper", isDone: true },
-      { id: taskId_4, title: "Tutorials", isDone: true },
-    ],
-  };
-
   const endState = tasksReducer(
     startState,
-    statusChangeAC(todoListId_2, taskId_2, true)
+    statusChangeAC("2", true, todoListId_2)
   );
 
   expect(endState[todoListId_2].length).toBe(4);
@@ -99,30 +60,9 @@ test("correct task should change status", () => {
 });
 
 test("correct task should change title", () => {
-  const todoListId_1 = v1();
-  const todoListId_2 = v1();
-  const taskId_1 = v1();
-  const taskId_2 = v1();
-  const taskId_3 = v1();
-  const taskId_4 = v1();
-
-  const startState: TaskStateType = {
-    [todoListId_1]: [
-      { id: v1(), title: "Apple", isDone: true },
-      { id: v1(), title: "Rice", isDone: false },
-      { id: v1(), title: "Milk", isDone: true },
-    ],
-    [todoListId_2]: [
-      { id: taskId_1, title: "Book", isDone: true },
-      { id: taskId_2, title: "News", isDone: false },
-      { id: taskId_3, title: "Newspaper", isDone: true },
-      { id: taskId_4, title: "Tutorials", isDone: true },
-    ],
-  };
-
   const endState = tasksReducer(
     startState,
-    changeTaskTitleAC(todoListId_2, taskId_2, "Games")
+    changeTaskTitleAC("2", "Games", todoListId_2)
   );
 
   expect(endState[todoListId_2].length).toBe(4);
@@ -142,7 +82,6 @@ test("new array should be added when new todolist is added", () => {
       { id: "3", title: "tea", isDone: false },
     ],
   };
-
   const action = addTodolistAC("new todolist");
 
   const endState = tasksReducer(startState, action);

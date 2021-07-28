@@ -54,9 +54,8 @@ export const Todolist: React.FC<PropsType> = ({
         changeTaskTitle={changeTodolistTitleHandler}
       />
 
-      <div>
-        <AddItem callback={addTaskItem} />
-      </div>
+      <AddItem callback={addTaskItem} />
+
       <ul>
         {tasks.map((t) => {
           const onRemoveHandler = () => {
