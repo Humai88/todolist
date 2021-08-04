@@ -8,7 +8,7 @@ import styles from "./AddItem.module.scss";
 type PropsType = {
   callback: (title: string) => void;
 };
-export const AddItem: React.FC<PropsType> = ({ callback }) => {
+export const AddItem: React.FC<PropsType> = React.memo(({ callback }) => {
   const [newTaskTitle, setNewTaskTitle] = useState<string>("");
   const [error, setError] = useState<boolean>(false);
 
@@ -27,7 +27,10 @@ export const AddItem: React.FC<PropsType> = ({ callback }) => {
   };
 
   const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-    setError(false);
+    if (error) {
+      setError(false);
+    }
+
     if (e.key === "Enter") {
       onClickHandler();
     }
@@ -54,4 +57,4 @@ export const AddItem: React.FC<PropsType> = ({ callback }) => {
       )}
     </div>
   );
-};
+});

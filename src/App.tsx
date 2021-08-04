@@ -1,8 +1,6 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styles from "./App.module.scss";
 import { Todolist } from "./Components/Todolist/Todolist";
-import { useState } from "react";
-import { v1 } from "uuid";
 import { AddItem } from "./Components/AddItem/AddItem";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -13,6 +11,20 @@ import MenuIcon from "@material-ui/icons/Menu";
 import { Container } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
+import {
+  addTaskAC,
+  changeTaskTitleAC,
+  removeTaskAC,
+  statusChangeAC,
+} from "./state/tasksReducer";
+import {
+  addTodolistAC,
+  changeFilterAC,
+  changeTodolistTitleAC,
+  removeTodolistAC,
+} from "./state/todolistsReducer";
+import { useDispatch, useSelector } from "react-redux";
+import { AppRootStateType } from "./state/store";
 
 export type TaskType = {
   id: string;
@@ -31,98 +43,80 @@ export type TaskStateType = {
 };
 
 function App() {
-  const todoListId_1 = v1();
-  const todoListId_2 = v1();
+  const dispatch = useDispatch();
+  const tasks = useSelector<AppRootStateType, TaskStateType>(
+    (state) => state.tasks
+  );
+  const todolists = useSelector<AppRootStateType, TodoListType[]>(
+    (state) => state.todolists
+  );
+  console.log(tasks);
 
-  const [todoLists, setTodoLists] = useState<Array<TodoListType>>([
-    { id: todoListId_1, title: "What to buy", filter: "All" },
-    {
-      id: todoListId_2,
-      title: "What to read",
-      filter: "All",
+  // TDlists functions
+  const changeFilter = useCallback(
+    (value: FilterValuesType, todoListId: string) => {
+      const action = changeFilterAC(value, todoListId);
+      dispatch(action);
     },
-  ]);
+    [dispatch]
+  );
 
-  const [tasks, setTasks] = useState<TaskStateType>({
-    [todoListId_1]: [
-      { id: v1(), title: "Apple", isDone: true },
-      { id: v1(), title: "Rice", isDone: false },
-      { id: v1(), title: "Milk", isDone: true },
-      { id: v1(), title: "Pears", isDone: true },
-    ],
-    [todoListId_2]: [
-      { id: v1(), title: "Book", isDone: true },
-      { id: v1(), title: "News", isDone: false },
-      { id: v1(), title: "Newspaper", isDone: true },
-      { id: v1(), title: "Tutorials", isDone: true },
-    ],
-  });
+  const removeTodoList = useCallback(
+    (todoListId: string) => {
+      const action = removeTodolistAC(todoListId);
+      dispatch(action);
+    },
+    [dispatch]
+  );
 
-  //* Todolists functions
-  function changeFilter(value: FilterValuesType, todoListId: string) {
-    let todoList = todoLists.find((tl) => tl.id === todoListId);
-    if (todoList) {
-      todoList.filter = value;
-      setTodoLists([...todoLists]);
-    }
-  }
+  const addTodolist = useCallback(
+    (title: string) => {
+      const action = addTodolistAC(title);
+      dispatch(action);
+    },
+    [dispatch]
+  );
 
-  function removeTodoList(todoListId: string) {
-    setTodoLists(todoLists.filter((tl) => tl.id !== todoListId));
-    delete tasks[todoListId];
-  }
+  const changeTodoListTitle = useCallback(
+    (title: string, todoListId: string) => {
+      const action = changeTodolistTitleAC(title, todoListId);
+      dispatch(action);
+    },
+    [dispatch]
+  );
 
-  function addTodolist(title: string) {
-    let todolist: TodoListType = {
-      id: v1(),
-      filter: "All",
-      title: title,
-    };
-    setTodoLists([todolist, ...todoLists]);
-    setTasks({ ...tasks, [todolist.id]: [] });
-  }
+  //Tasks functions
+  const addTask = useCallback(
+    (title: string, todoListId: string) => {
+      const action = addTaskAC(title, todoListId);
+      dispatch(action);
+    },
+    [dispatch]
+  );
 
-  function changeTodoListTitle(title: string, todoListId: string) {
-    const updatedTodolist = todoLists.map((tl) => {
-      if (tl.id === todoListId) {
-        return { ...tl, title: title };
-      }
-      return tl;
-    });
-    setTodoLists(updatedTodolist);
-  }
+  const removeTask = useCallback(
+    (id: string, todoListId: string) => {
+      const action = removeTaskAC(id, todoListId);
+      dispatch(action);
+    },
+    [dispatch]
+  );
 
-  //* Tasks functions
-  const addTask = (title: string, todoListId: string) => {
-    const newTask = { id: v1(), title: title, isDone: false };
-    tasks[todoListId] = [newTask, ...tasks[todoListId]];
-    setTasks({ ...tasks });
-  };
+  const checkboxChange = useCallback(
+    (taskId: string, isDone: boolean, todoListId: string) => {
+      const action = statusChangeAC(taskId, isDone, todoListId);
+      dispatch(action);
+    },
+    [dispatch]
+  );
 
-  function removeTask(id: string, todoListId: string) {
-    tasks[todoListId] = tasks[todoListId].filter((t) => t.id !== id);
-    setTasks({ ...tasks });
-  }
-
-  function checkboxChange(taskId: string, isDone: boolean, todoListId: string) {
-    tasks[todoListId] = tasks[todoListId].map((t) => {
-      if (t.id === taskId) {
-        return { ...t, isDone: isDone };
-      }
-      return t;
-    });
-    setTasks({ ...tasks });
-  }
-
-  function changeTaskTitle(taskId: string, title: string, todoListId: string) {
-    tasks[todoListId] = tasks[todoListId].map((t) => {
-      if (t.id === taskId) {
-        return { ...t, title: title };
-      }
-      return t;
-    });
-    setTasks({ ...tasks });
-  }
+  const changeTaskTitle = useCallback(
+    (taskId: string, title: string, todoListId: string) => {
+      const action = changeTaskTitleAC(taskId, title, todoListId);
+      dispatch(action);
+    },
+    [dispatch]
+  );
 
   return (
     <React.Fragment>
@@ -135,20 +129,15 @@ function App() {
           <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
-      <Container fixed>
+      <Container maxWidth="xl">
         <Grid container className={styles.addItem}>
           <AddItem callback={addTodolist} />
         </Grid>
 
         <Grid container spacing={3}>
-          {todoLists.map((tl) => {
+          {todolists.map((tl) => {
             let tasksForTodoList = tasks[tl.id];
-            if (tl.filter === "Completed") {
-              tasksForTodoList = tasksForTodoList.filter((t) => t.isDone);
-            }
-            if (tl.filter === "Active") {
-              tasksForTodoList = tasksForTodoList.filter((t) => !t.isDone);
-            }
+
             return (
               <Grid item key={tl.id}>
                 <Paper

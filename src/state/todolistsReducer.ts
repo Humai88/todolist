@@ -17,9 +17,8 @@ export const todolistsReducer = (
 ): TodoListType[] => {
   switch (action.type) {
     case "CHANGE_FILTER":
-      let todoList = [...state].find(
-        (tl) => tl.id === action.payload.todoListId
-      );
+      debugger;
+      let todoList = state.find((tl) => tl.id === action.payload.todoListId);
       if (todoList) {
         todoList.filter = action.payload.value;
         return [...state];
@@ -29,12 +28,12 @@ export const todolistsReducer = (
       return state.filter((tl) => tl.id !== action.payload.todoListId);
     case "ADD_TODOLIST":
       return [
-        ...state,
         {
           id: action.payload.todolistId,
           filter: "All",
           title: action.payload.title,
         },
+        ...state,
       ];
     case "CHANGE_TODOLIST_TITLE":
       return state.map((tl) =>

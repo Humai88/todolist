@@ -11,18 +11,13 @@ li {
   justify-items: space-between;
 }
 
-.isDone {
-  opacity: 0.7;
-}
 .header {
   font-size: 1.7rem;
   font-weight: 600;
   color: $color-sand !important;
   cursor: pointer;
 }
-.trash {
-  cursor: pointer;
-}
+
 .btnsWrapper {
   display: grid;
   grid-template-columns: repeat(4, 25%);
@@ -30,9 +25,6 @@ li {
 .filterBtns {
   // justify-self: center;
   padding: 7px 9px;
-}
-.span {
-  cursor: pointer;
 }
 
 .btnRemove {
