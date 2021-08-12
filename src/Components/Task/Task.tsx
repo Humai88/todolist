@@ -14,8 +14,13 @@ type TaskPropsType = {
 };
 
 export const Task: React.FC<TaskPropsType> = React.memo((props) => {
-  const { removeTask, checkboxChange, changeTaskTitle, task, todolistId } =
-    props;
+  const {
+    removeTask,
+    checkboxChange,
+    changeTaskTitle,
+    task,
+    todolistId,
+  } = props;
 
   const onRemoveHandler = () => {
     removeTask(task.id, todolistId);
@@ -33,16 +38,18 @@ export const Task: React.FC<TaskPropsType> = React.memo((props) => {
   );
   return (
     <li className={task.isDone ? styles.isDone : ""}>
-      <Checkbox checked={task.isDone} onChange={onCheckboxChangeHandler}>
-        <EditableSpan
-          className={styles.span}
-          changeTaskTitle={changeTaskTitleHandler}
-          title={task.title}
-        />
-      </Checkbox>
+      <div className={styles.wrapper}>
+        <Checkbox checked={task.isDone} onChange={onCheckboxChangeHandler}>
+          <EditableSpan
+            className={styles.span}
+            changeTaskTitle={changeTaskTitleHandler}
+            title={task.title}
+          />
+        </Checkbox>
 
-      <div className={styles.trash} onClick={onRemoveHandler}>
-        <FaTrash />
+        <div className={styles.trash} onClick={onRemoveHandler}>
+          <FaTrash />
+        </div>
       </div>
     </li>
   );

@@ -1,7 +1,15 @@
 .trash {
   cursor: pointer;
 }
-
+li {
+  list-style-type: none;
+}
+.wrapper {
+  display: flex;
+  width: 100;
+  justify-content: space-between;
+  align-items: center;
+}
 .span {
   cursor: pointer;
 }
