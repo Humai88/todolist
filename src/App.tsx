@@ -139,7 +139,7 @@ function App() {
             let tasksForTodoList = tasks[tl.id];
 
             return (
-              <Grid item key={tl.id}>
+              <div key={tl.id}>
                 <Paper
                   style={{ padding: "1rem", backgroundColor: "#202d47" }}
                   elevation={0}
@@ -160,7 +160,7 @@ function App() {
                     changeTodoListTitle={changeTodoListTitle}
                   />
                 </Paper>
-              </Grid>
+              </div>
             );
           })}
         </Grid>
