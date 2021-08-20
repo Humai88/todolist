@@ -3,12 +3,16 @@ import Checkbox from "./../Checkbox/Checkbox";
 import { EditableSpan } from "./../EditableSpan/EditableSpan";
 import { FaTrash } from "react-icons/fa";
 import styles from "./Task.module.scss";
-import { TaskType } from "../../App";
+import { TaskStatuses, TaskType } from "./../../api/todolistsAPI";
 
 type TaskPropsType = {
   changeTaskTitle: (taskId: string, title: string, todoListId: string) => void;
   removeTask: (id: string, todoListId: string) => void;
-  checkboxChange: (taskId: string, isDone: boolean, todoListId: string) => void;
+  checkboxChange: (
+    taskId: string,
+    status: TaskStatuses,
+    todoListId: string
+  ) => void;
   task: TaskType;
   todolistId: string;
 };
@@ -27,7 +31,11 @@ export const Task: React.FC<TaskPropsType> = React.memo((props) => {
   };
 
   const onCheckboxChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    checkboxChange(task.id, e.currentTarget.checked, todolistId);
+    checkboxChange(
+      task.id,
+      e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New,
+      todolistId
+    );
   };
 
   const changeTaskTitleHandler = useCallback(
@@ -37,9 +45,12 @@ export const Task: React.FC<TaskPropsType> = React.memo((props) => {
     [changeTaskTitle, task.id, todolistId]
   );
   return (
-    <li className={task.isDone ? styles.isDone : ""}>
+    <li className={task.status === TaskStatuses.Completed ? styles.isDone : ""}>
       <div className={styles.wrapper}>
-        <Checkbox checked={task.isDone} onChange={onCheckboxChangeHandler}>
+        <Checkbox
+          checked={task.status === TaskStatuses.Completed}
+          onChange={onCheckboxChangeHandler}
+        >
           <EditableSpan
             className={styles.span}
             changeTaskTitle={changeTaskTitleHandler}

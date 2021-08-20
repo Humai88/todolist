@@ -1,12 +1,28 @@
-import { TodoListType, FilterValuesType } from "./../App";
+import { TodolistType } from "./../api/todolistsAPI";
 import { v1 } from "uuid";
 
-const initialState: TodoListType[] = [];
+export type TodoListEntityType = TodolistType & {
+  filter: FilterValuesType;
+};
+export const todoListId_1 = v1();
+export const todoListId_2 = v1();
+export type FilterValuesType = "All" | "Completed" | "Active";
+
+const initialState: TodoListEntityType[] = [
+  { id: todoListId_1, addedDate: "", order: 1, title: "React", filter: "All" },
+  {
+    id: todoListId_2,
+    addedDate: "",
+    order: 2,
+    title: "TypeScript",
+    filter: "All",
+  },
+];
 
 export const todolistsReducer = (
   state = initialState,
   action: ActionTodolistsTypes
-): TodoListType[] => {
+): TodoListEntityType[] => {
   switch (action.type) {
     case "CHANGE_FILTER":
       debugger;
@@ -24,6 +40,8 @@ export const todolistsReducer = (
           id: action.payload.todolistId,
           filter: "All",
           title: action.payload.title,
+          addedDate: "",
+          order: 0,
         },
         ...state,
       ];

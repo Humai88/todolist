@@ -1,25 +1,25 @@
-import { TodoListType, FilterValuesType } from "./../App";
-
 import {
   todolistsReducer,
   addTodolistAC,
   removeTodolistAC,
   changeFilterAC,
   changeTodolistTitleAC,
+  FilterValuesType,
+  TodoListEntityType,
 } from "./todolistsReducer";
 import { v1 } from "uuid";
 
 let todolistId1: string;
 let todolistId2: string;
-let startState: TodoListType[];
+let startState: TodoListEntityType[];
 
 beforeEach(() => {
   todolistId1 = v1();
   todolistId2 = v1();
 
   startState = [
-    { id: todolistId1, title: "What to learn", filter: "All" },
-    { id: todolistId2, title: "What to buy", filter: "All" },
+    { id: todolistId1, addedDate: "", order: 1, title: "React", filter: "All" },
+    { id: todolistId2, addedDate: "", order: 1, title: "CSS", filter: "All" },
   ];
 });
 
@@ -39,7 +39,7 @@ test("correct todolist should be added", () => {
   );
 
   expect(endState.length).toBe(3);
-  expect(endState[2].title).toBe("New Todolist");
+  expect(endState[0].title).toBe("New Todolist");
 });
 
 test("correct todolist should change its name", () => {
@@ -50,7 +50,7 @@ test("correct todolist should change its name", () => {
     changeTodolistTitleAC(newTodolistTitle, todolistId2)
   );
 
-  expect(endState[0].title).toBe("What to learn");
+  expect(endState[0].title).toBe("React");
   expect(endState[1].title).toBe(newTodolistTitle);
 });
 

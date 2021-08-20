@@ -233,12 +233,6 @@ export const UpdateTask = () => {
       [name]: newValue,
     });
   };
-  // const changeTololistId = (e: ChangeEvent<HTMLInputElement>) => {
-  //   setTodolistId(e.currentTarget.value);
-  // };
-  // const changeTaskId = (e: ChangeEvent<HTMLInputElement>) => {
-  //   setTaskId(e.currentTarget.value);
-  // };
 
   const updateTask = () => {
     todolistsAPI

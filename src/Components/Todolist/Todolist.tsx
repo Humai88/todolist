@@ -1,10 +1,11 @@
 import React, { useCallback } from "react";
-import { FilterValuesType, TaskType } from "./../../App";
 import { Button } from "./../Buttons/Button";
 import { AddItem } from "./../AddItem/AddItem";
 import styles from "./Todolist.module.scss";
 import { EditableSpan } from "./../EditableSpan/EditableSpan";
 import { Task } from "../Task/Task";
+import { FilterValuesType } from "../../state/todolistsReducer";
+import { TaskStatuses, TaskType } from "../../api/todolistsAPI";
 
 type PropsType = {
   title: string;
@@ -12,7 +13,11 @@ type PropsType = {
   removeTask: (id: string, todoListId: string) => void;
   changeFilter: (value: FilterValuesType, todoListId: string) => void;
   addTask: (title: string, todoListId: string) => void;
-  checkboxChange: (taskId: string, isDone: boolean, todoListId: string) => void;
+  checkboxChange: (
+    taskId: string,
+    status: TaskStatuses,
+    todoListId: string
+  ) => void;
   filter: FilterValuesType;
   id: string;
   removeTodoList: (todoListId: string) => void;
@@ -35,14 +40,14 @@ export const Todolist: React.FC<PropsType> = React.memo((props) => {
     changeTodoListTitle,
   } = props;
 
-  const onAllClickHandler = useCallback(
-    () => changeFilter("All", id),
-    [changeFilter, id]
-  );
-  const onActiveClickHandler = useCallback(
-    () => changeFilter("Active", id),
-    [changeFilter, id]
-  );
+  const onAllClickHandler = useCallback(() => changeFilter("All", id), [
+    changeFilter,
+    id,
+  ]);
+  const onActiveClickHandler = useCallback(() => changeFilter("Active", id), [
+    changeFilter,
+    id,
+  ]);
   const onCompletedClickHandler = useCallback(
     () => changeFilter("Completed", id),
     [changeFilter, id]
@@ -64,10 +69,10 @@ export const Todolist: React.FC<PropsType> = React.memo((props) => {
 
   let tasksForTodoList = tasks;
   if (filter === "Completed") {
-    tasksForTodoList = tasks.filter((t) => t.isDone);
+    tasksForTodoList = tasks.filter((t) => t.status === TaskStatuses.Completed);
   }
   if (filter === "Active") {
-    tasksForTodoList = tasks.filter((t) => !t.isDone);
+    tasksForTodoList = tasks.filter((t) => t.status === TaskStatuses.New);
   }
 
   return (

@@ -10,27 +10,27 @@ export default {
 
 const Template: ComponentStory<typeof Task> = (args) => <Task {...args} />;
 
-export const FirstTaskExample = Template.bind({});
-FirstTaskExample.args = {
-  changeTaskTitle: action("Task title was changed"),
-  removeTask: action("Task was removed"),
-  checkboxChange: action("Checkbox was changed"),
-  task: {
-    id: "1",
-    title: "Buy",
-    isDone: true,
-  },
-  todolistId: "todolistId1",
-};
-export const SecondTaskExample = Template.bind({});
-SecondTaskExample.args = {
-  changeTaskTitle: action("Task title was changed"),
-  removeTask: action("Task was removed"),
-  checkboxChange: action("Checkbox was changed"),
-  task: {
-    id: "2",
-    title: "Read",
-    isDone: false,
-  },
-  todolistId: "todolistId2",
-};
+// export const FirstTaskExample = Template.bind({});
+// FirstTaskExample.args = {
+//   changeTaskTitle: action("Task title was changed"),
+//   removeTask: action("Task was removed"),
+//   checkboxChange: action("Checkbox was changed"),
+//   task: {
+//     id: "1",
+//     title: "Buy",
+//     status: ,
+//   },
+//   todolistId: "todolistId1",
+// };
+// export const SecondTaskExample = Template.bind({});
+// SecondTaskExample.args = {
+//   changeTaskTitle: action("Task title was changed"),
+//   removeTask: action("Task was removed"),
+//   checkboxChange: action("Checkbox was changed"),
+//   task: {
+//     id: "2",
+//     title: "Read",
+//     isDone: false,
+//   },
+//   todolistId: "todolistId2",
+// };

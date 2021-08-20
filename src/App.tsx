@@ -21,23 +21,14 @@ import {
   addTodolistAC,
   changeFilterAC,
   changeTodolistTitleAC,
+  FilterValuesType,
   removeTodolistAC,
+  TodoListEntityType,
 } from "./state/todolistsReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { AppRootStateType } from "./state/store";
+import { TaskStatuses, TaskType } from "./api/todolistsAPI";
 
-export type TaskType = {
-  id: string;
-  title: string;
-  isDone: boolean;
-};
-
-export type FilterValuesType = "All" | "Completed" | "Active";
-export type TodoListType = {
-  id: string;
-  title: string;
-  filter: FilterValuesType;
-};
 export type TaskStateType = {
   [key: string]: Array<TaskType>;
 };
@@ -47,7 +38,7 @@ function App() {
   const tasks = useSelector<AppRootStateType, TaskStateType>(
     (state) => state.tasks
   );
-  const todolists = useSelector<AppRootStateType, TodoListType[]>(
+  const todolists = useSelector<AppRootStateType, TodoListEntityType[]>(
     (state) => state.todolists
   );
   console.log(tasks);
@@ -103,8 +94,8 @@ function App() {
   );
 
   const checkboxChange = useCallback(
-    (taskId: string, isDone: boolean, todoListId: string) => {
-      const action = statusChangeAC(taskId, isDone, todoListId);
+    (taskId: string, status: TaskStatuses, todoListId: string) => {
+      const action = statusChangeAC(taskId, status, todoListId);
       dispatch(action);
     },
     [dispatch]
