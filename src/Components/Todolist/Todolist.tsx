@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { Button } from "./../Buttons/Button";
 import { AddItem } from "./../AddItem/AddItem";
 import styles from "./Todolist.module.scss";
@@ -6,6 +6,8 @@ import { EditableSpan } from "./../EditableSpan/EditableSpan";
 import { Task } from "../Task/Task";
 import { FilterValuesType } from "../../state/todolistsReducer";
 import { TaskStatuses, TaskType } from "../../api/todolistsAPI";
+import { useDispatch } from "react-redux";
+import { fetchTasksThunk } from "../../state/tasksReducer";
 
 type PropsType = {
   title: string;
@@ -39,19 +41,22 @@ export const Todolist: React.FC<PropsType> = React.memo((props) => {
     changeTaskTitle,
     changeTodoListTitle,
   } = props;
-
+  const dispatch = useDispatch();
   const onAllClickHandler = useCallback(() => changeFilter("All", id), [
     changeFilter,
     id,
   ]);
+
   const onActiveClickHandler = useCallback(() => changeFilter("Active", id), [
     changeFilter,
     id,
   ]);
+
   const onCompletedClickHandler = useCallback(
     () => changeFilter("Completed", id),
     [changeFilter, id]
   );
+
   const onClickHandler = () => removeTodoList(id);
   const addTaskItem = useCallback(
     (title: string) => {
@@ -75,6 +80,9 @@ export const Todolist: React.FC<PropsType> = React.memo((props) => {
     tasksForTodoList = tasks.filter((t) => t.status === TaskStatuses.New);
   }
 
+  useEffect(() => {
+    dispatch(fetchTasksThunk(id));
+  }, []);
   return (
     <div className={styles.wrapper}>
       <EditableSpan

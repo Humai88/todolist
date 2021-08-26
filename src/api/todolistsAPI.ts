@@ -44,7 +44,7 @@ export type TaskType = {
   order: number;
   addedDate: string;
 };
-type UpdateTaskType = {
+export type UpdateTaskType = {
   description: string;
   title: string;
   status: number;
@@ -82,7 +82,7 @@ export const todolistsAPI = {
     return instance.get<TaskResponseType>(`todo-lists/${todolistId}/tasks`);
   },
   postTask(todolistId: string, title: string) {
-    return instance.post<ResponseType<TaskType>>(
+    return instance.post<ResponseType<{ item: TaskType }>>(
       `todo-lists/${todolistId}/tasks`,
       {
         title: title,

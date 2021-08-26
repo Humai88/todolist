@@ -1,0 +1,10 @@
+.checkbox {
+  margin: 1rem;
+  font-size: 1rem;
+  border: 1px solid #383838;
+  background: #e9e9e9;
+}
+
+.spanClassName {
+  color: #e9e9e9;
+}

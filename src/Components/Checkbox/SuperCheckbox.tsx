@@ -3,7 +3,7 @@ import React, {
   DetailedHTMLProps,
   InputHTMLAttributes,
 } from "react";
-import s from "./Checkbox.module.css";
+import s from "./SuperCheckbox.module.css";
 
 // тип пропсов обычного инпута
 type DefaultInputPropsType = DetailedHTMLProps<
@@ -11,12 +11,12 @@ type DefaultInputPropsType = DetailedHTMLProps<
   HTMLInputElement
 >;
 
-type CheckboxPropsType = DefaultInputPropsType & {
+type SuperCheckboxPropsType = DefaultInputPropsType & {
   onChangeChecked?: (checked: boolean) => void;
   spanClassName?: string;
 };
 
-const Checkbox: React.FC<CheckboxPropsType> = ({
+const SuperCheckbox: React.FC<SuperCheckboxPropsType> = ({
   type,
   onChange,
   onChangeChecked,
@@ -33,17 +33,16 @@ const Checkbox: React.FC<CheckboxPropsType> = ({
   const finalInputClassName = `${s.checkbox} ${className ? className : ""}`;
 
   return (
-    <>
+    <label>
       <input
         type={"checkbox"}
         onChange={onChangeCallback}
-        className={s.input}
+        className={finalInputClassName}
         {...restProps}
       />
       {children && <span className={s.spanClassName}>{children}</span>}
-      <label className={s.label}></label>{" "}
-    </>
+    </label> // благодаря label нажатие на спан передастся в инпут
   );
 };
 
-export default Checkbox;
+export default SuperCheckbox;

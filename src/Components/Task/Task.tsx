@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useCallback } from "react";
-import Checkbox from "./../Checkbox/Checkbox";
+import SuperCheckbox from "./../Checkbox/SuperCheckbox";
 import { EditableSpan } from "./../EditableSpan/EditableSpan";
 import { FaTrash } from "react-icons/fa";
 import styles from "./Task.module.scss";
@@ -47,7 +47,7 @@ export const Task: React.FC<TaskPropsType> = React.memo((props) => {
   return (
     <li className={task.status === TaskStatuses.Completed ? styles.isDone : ""}>
       <div className={styles.wrapper}>
-        <Checkbox
+        <SuperCheckbox
           checked={task.status === TaskStatuses.Completed}
           onChange={onCheckboxChangeHandler}
         >
@@ -56,7 +56,7 @@ export const Task: React.FC<TaskPropsType> = React.memo((props) => {
             changeTaskTitle={changeTaskTitleHandler}
             title={task.title}
           />
-        </Checkbox>
+        </SuperCheckbox>
 
         <div className={styles.trash} onClick={onRemoveHandler}>
           <FaTrash />
