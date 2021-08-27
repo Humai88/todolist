@@ -24,7 +24,7 @@ type PropsType = {
   id: string;
   removeTodoList: (todoListId: string) => void;
   changeTaskTitle: (taskId: string, title: string, todoListId: string) => void;
-  changeTodoListTitle: (title: string, todoListId: string) => void;
+  changeTodoListTitle: (todoListId: string, title: string) => void;
 };
 
 export const Todolist: React.FC<PropsType> = React.memo((props) => {
@@ -67,7 +67,7 @@ export const Todolist: React.FC<PropsType> = React.memo((props) => {
 
   const changeTodolistTitleHandler = useCallback(
     (title: string) => {
-      changeTodoListTitle(title, id);
+      changeTodoListTitle(id, title);
     },
     [changeTodoListTitle, id]
   );

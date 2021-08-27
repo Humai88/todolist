@@ -12,21 +12,18 @@ import { Container } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import {
-  addTaskAC,
   addTaskThunk,
-  changeTaskTitleAC,
-  removeTaskAC,
   removeTaskThunk,
   updateTaskThunk,
 } from "./state/tasksReducer";
 import {
-  addTodolistAC,
+  addTodolistsThunk,
   changeFilterAC,
-  changeTodolistTitleAC,
   fetchTodolistsThunk,
   FilterValuesType,
-  removeTodolistAC,
+  removeTodolistThunk,
   TodoListEntityType,
+  updateTodolistTitleThunk,
 } from "./state/todolistsReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { AppRootStateType } from "./state/store";
@@ -44,7 +41,6 @@ function App() {
   const todolists = useSelector<AppRootStateType, TodoListEntityType[]>(
     (state) => state.todolists
   );
-  console.log(tasks);
 
   // TDlists functions
   const changeFilter = useCallback(
@@ -57,16 +53,14 @@ function App() {
 
   const removeTodoList = useCallback(
     (todoListId: string) => {
-      const action = removeTodolistAC(todoListId);
-      dispatch(action);
+      dispatch(removeTodolistThunk(todoListId));
     },
     [dispatch]
   );
 
   const addTodolist = useCallback(
     (title: string) => {
-      const action = addTodolistAC(title);
-      dispatch(action);
+      dispatch(addTodolistsThunk(title));
     },
     [dispatch]
   );
@@ -76,9 +70,8 @@ function App() {
   }, []);
 
   const changeTodoListTitle = useCallback(
-    (title: string, todoListId: string) => {
-      const action = changeTodolistTitleAC(title, todoListId);
-      dispatch(action);
+    (todolistId: string, title: string) => {
+      dispatch(updateTodolistTitleThunk(todolistId, title));
     },
     [dispatch]
   );
@@ -165,3 +158,6 @@ function App() {
 }
 
 export default App;
+function rremoveTodolistThunk(todoListId: string) {
+  throw new Error("Function not implemented.");
+}
