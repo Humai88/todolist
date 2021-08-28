@@ -5,9 +5,9 @@ import {
   updateTaskAC,
 } from "./tasksReducer";
 import { v1 } from "uuid";
-import { TaskStateType } from "../App";
-import { TaskPriorities, TaskStatuses } from "../api/todolistsAPI";
+import { TaskPriorities, TaskStatuses } from "../../api/todolistsAPI";
 import { addTodolistAC } from "./todolistsReducer";
+import { TaskStateType } from "./TodolistsList ";
 
 let todoListId_1: string;
 let todoListId_2: string;

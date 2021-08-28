@@ -1,21 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap");
-@import "./scss/global.scss";
+@import "./../scss/global.scss";
 * {
   font-family: "Poppins";
   color: $color-body;
 }
 body {
   color: $color-body;
-  // background-color: $color-background;
 }
-.todoWrapper {
-}
-.paper {
-  margin: 1rem;
-}
-.addItem {
-  margin: 1rem;
-}
+
 .navbar {
   background-color: $color-background-dark;
   color: $color-body !important;

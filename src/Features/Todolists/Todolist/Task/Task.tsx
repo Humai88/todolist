@@ -1,9 +1,10 @@
 import React, { ChangeEvent, useCallback } from "react";
-import SuperCheckbox from "./../Checkbox/SuperCheckbox";
-import { EditableSpan } from "./../EditableSpan/EditableSpan";
+
+import { EditableSpan } from "../../../../Components/EditableSpan/EditableSpan";
 import { FaTrash } from "react-icons/fa";
 import styles from "./Task.module.scss";
-import { TaskStatuses, TaskType } from "./../../api/todolistsAPI";
+import { TaskStatuses, TaskType } from "../../../../api/todolistsAPI";
+import SuperCheckbox from "../../../../Components/Checkbox/SuperCheckbox";
 
 type TaskPropsType = {
   changeTaskTitle: (taskId: string, title: string, todoListId: string) => void;

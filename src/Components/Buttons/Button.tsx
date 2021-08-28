@@ -1,5 +1,5 @@
 import React, { ButtonHTMLAttributes, DetailedHTMLProps } from "react";
-import { FilterValuesType } from "../../state/todolistsReducer";
+import { FilterValuesType } from "../../Features/Todolists/todolistsReducer";
 import styles from "./Button.module.scss";
 
 type DefaultButtonPropsType = DetailedHTMLProps<
