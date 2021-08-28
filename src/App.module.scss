@@ -2,17 +2,19 @@
 @import "./scss/global.scss";
 * {
   font-family: "Poppins";
+  color: $color-body;
 }
 body {
+  color: $color-body;
   // background-color: $color-background;
 }
-
+.todoWrapper {
+}
 .paper {
-  padding: 5px;
   margin: 1rem;
 }
 .addItem {
-  margin: 1rem 0 1rem 0;
+  margin: 1rem;
 }
 .navbar {
   background-color: $color-background-dark;

@@ -14,5 +14,6 @@ li {
   cursor: pointer;
 }
 .isDone {
-  opacity: 0.7;
+  opacity: 0.6;
+  text-decoration: line-through;
 }

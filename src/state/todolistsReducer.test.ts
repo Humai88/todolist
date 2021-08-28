@@ -3,9 +3,9 @@ import {
   addTodolistAC,
   removeTodolistAC,
   changeFilterAC,
-  changeTodolistTitleAC,
   FilterValuesType,
   TodoListEntityType,
+  updateTodolistTitleAC,
 } from "./todolistsReducer";
 import { v1 } from "uuid";
 
@@ -31,27 +31,23 @@ test("correct todolist should be removed", () => {
 });
 
 test("correct todolist should be added", () => {
-  let newTodolistTitle = "New Todolist";
-
   const endState = todolistsReducer(
     startState,
-    addTodolistAC(newTodolistTitle)
+    addTodolistAC({ id: "1234567", addedDate: "", order: 1, title: "Redux" })
   );
 
   expect(endState.length).toBe(3);
-  expect(endState[0].title).toBe("New Todolist");
+  expect(endState[0].title).toBe("Redux");
 });
 
 test("correct todolist should change its name", () => {
-  let newTodolistTitle = "New Todolist";
-
   const endState = todolistsReducer(
     startState,
-    changeTodolistTitleAC(newTodolistTitle, todolistId2)
+    updateTodolistTitleAC(todolistId2, "Redux")
   );
 
   expect(endState[0].title).toBe("React");
-  expect(endState[1].title).toBe(newTodolistTitle);
+  expect(endState[1].title).toBe("Redux");
 });
 
 test("correct filter of todolist should be changed", () => {

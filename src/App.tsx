@@ -122,7 +122,7 @@ function App() {
           <AddItem callback={addTodolist} />
         </Grid>
 
-        <Grid container spacing={3}>
+        <Grid container className={styles.todoWrapper} spacing={0}>
           {todolists.map((tl) => {
             let tasksForTodoList = tasks[tl.id];
 
@@ -132,6 +132,7 @@ function App() {
                   style={{ padding: "1rem", backgroundColor: "#202d47" }}
                   elevation={0}
                   variant="outlined"
+                  className={styles.paper}
                 >
                   <Todolist
                     key={tl.id}
