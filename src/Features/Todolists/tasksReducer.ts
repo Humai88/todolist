@@ -2,110 +2,9 @@ import { ActionTodolistsTypes, SetTodosType } from "./todolistsReducer";
 import { Dispatch } from "redux";
 import { TaskStateType } from "./TodolistsList ";
 import { TaskType, todolistsAPI, UpdateTaskType } from "../../api/todolistsAPI";
-import { AppRootStateType } from "../../App/store";
+import { AppActionsType, AppRootStateType, ThunkType } from "../../App/store";
 
-const initialState: TaskStateType = {
-  // [todoListId_1]: [
-  //   {
-  //     id: v1(),
-  //     title: "Apple",
-  //     status: TaskStatuses.Completed,
-  //     priority: TaskPriorities.Middle,
-  //     description: "Description",
-  //     todoListId: todoListId_1,
-  //     deadline: "",
-  //     order: 1,
-  //     addedDate: "",
-  //     startDate: "",
-  //   },
-  //   {
-  //     id: v1(),
-  //     title: "Rice",
-  //     status: TaskStatuses.New,
-  //     priority: TaskPriorities.Middle,
-  //     description: "Description",
-  //     todoListId: todoListId_1,
-  //     deadline: "",
-  //     order: 1,
-  //     addedDate: "",
-  //     startDate: "",
-  //   },
-  //   {
-  //     id: v1(),
-  //     title: "Milk",
-  //     status: TaskStatuses.Completed,
-  //     priority: TaskPriorities.Middle,
-  //     description: "Description",
-  //     todoListId: todoListId_1,
-  //     deadline: "",
-  //     order: 1,
-  //     addedDate: "",
-  //     startDate: "",
-  //   },
-  //   {
-  //     id: v1(),
-  //     title: "Pears",
-  //     status: TaskStatuses.New,
-  //     priority: TaskPriorities.Middle,
-  //     description: "Description",
-  //     todoListId: todoListId_1,
-  //     deadline: "",
-  //     order: 1,
-  //     addedDate: "",
-  //     startDate: "",
-  //   },
-  // ],
-  // [todoListId_2]: [
-  //   {
-  //     id: v1(),
-  //     title: "Book",
-  //     status: TaskStatuses.Completed,
-  //     priority: TaskPriorities.Middle,
-  //     description: "Description",
-  //     todoListId: todoListId_2,
-  //     deadline: "",
-  //     order: 1,
-  //     addedDate: "",
-  //     startDate: "",
-  //   },
-  //   {
-  //     id: v1(),
-  //     title: "News",
-  //     status: TaskStatuses.New,
-  //     priority: TaskPriorities.Middle,
-  //     description: "Description",
-  //     todoListId: todoListId_2,
-  //     deadline: "",
-  //     order: 1,
-  //     addedDate: "",
-  //     startDate: "",
-  //   },
-  //   {
-  //     id: v1(),
-  //     title: "Newspaper",
-  //     status: TaskStatuses.Completed,
-  //     priority: TaskPriorities.Middle,
-  //     description: "Description",
-  //     todoListId: todoListId_2,
-  //     deadline: "",
-  //     order: 1,
-  //     addedDate: "",
-  //     startDate: "",
-  //   },
-  //   {
-  //     id: v1(),
-  //     title: "Tutorials",
-  //     status: TaskStatuses.New,
-  //     priority: TaskPriorities.Middle,
-  //     description: "Description",
-  //     todoListId: todoListId_2,
-  //     deadline: "",
-  //     order: 1,
-  //     addedDate: "",
-  //     startDate: "",
-  //   },
-  // ],
-};
+const initialState: TaskStateType = {};
 
 export const tasksReducer = (
   state = initialState,
@@ -206,8 +105,8 @@ export const setTasksAC = (tasks: TaskType[], todolistId: string) => {
 };
 
 // Thunks
-export const fetchTasksThunk = (todolistId: string) => (
-  dispatch: Dispatch<ActionTasksTypes>
+export const fetchTasksThunk = (todolistId: string): ThunkType => (
+  dispatch
 ) => {
   todolistsAPI.getTasks(todolistId).then((res) => {
     const tasks = res.data.items;
@@ -216,17 +115,18 @@ export const fetchTasksThunk = (todolistId: string) => (
   });
 };
 
-export const removeTaskThunk = (taskId: string, todolistId: string) => (
-  dispatch: Dispatch<ActionTasksTypes>
-) => {
+export const removeTaskThunk = (
+  taskId: string,
+  todolistId: string
+): ThunkType => (dispatch) => {
   todolistsAPI.deleteTask(todolistId, taskId).then((res) => {
     const action = removeTaskAC(taskId, todolistId);
     dispatch(action);
   });
 };
 
-export const addTaskThunk = (todolistId: string, title: string) => (
-  dispatch: Dispatch<ActionTasksTypes>
+export const addTaskThunk = (todolistId: string, title: string): ThunkType => (
+  dispatch
 ) => {
   todolistsAPI.postTask(todolistId, title).then((res) => {
     const task = res.data.data.item;
@@ -239,10 +139,7 @@ export const updateTaskThunk = (
   taskId: string,
   model: UpdateTaskModelType,
   todolistId: string
-) => (
-  dispatch: Dispatch<ActionTasksTypes>,
-  getState: () => AppRootStateType
-) => {
+): ThunkType => (dispatch, getState: () => AppRootStateType) => {
   const allTasksFromState = getState().tasks;
   const tasksForCurrentTodolist = allTasksFromState[todolistId];
   const task = tasksForCurrentTodolist.find((t) => {

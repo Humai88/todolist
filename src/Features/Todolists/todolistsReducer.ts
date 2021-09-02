@@ -1,6 +1,7 @@
 import { todolistsAPI, TodolistType } from "./../../api/todolistsAPI";
 import { v1 } from "uuid";
 import { Dispatch } from "redux";
+import { AppActionsType, ThunkType } from "../../App/store";
 
 // For tests
 export const todoListId_1 = v1();
@@ -89,17 +90,15 @@ export const setTodolistsAC = (todos: TodolistType[]) => {
 };
 
 // Thunks
-export const fetchTodolistsThunk = (
-  dispatch: Dispatch<ActionTodolistsTypes>
-) => {
+export const fetchTodolistsThunk = (dispatch: Dispatch<AppActionsType>) => {
   todolistsAPI.getTodolists().then((res) => {
     const action = setTodolistsAC(res.data);
     dispatch(action);
   });
 };
 
-export const removeTodolistThunk = (todolistId: string) => (
-  dispatch: Dispatch<ActionTodolistsTypes>
+export const removeTodolistThunk = (todolistId: string): ThunkType => (
+  dispatch
 ) => {
   todolistsAPI.deleteTodolist(todolistId).then((res) => {
     const action = removeTodolistAC(todolistId);
@@ -107,18 +106,17 @@ export const removeTodolistThunk = (todolistId: string) => (
   });
 };
 
-export const addTodolistsThunk = (title: string) => (
-  dispatch: Dispatch<ActionTodolistsTypes>
-) => {
+export const addTodolistsThunk = (title: string): ThunkType => (dispatch) => {
   todolistsAPI.postTodolist(title).then((res) => {
     const action = addTodolistAC(res.data.data.item);
     dispatch(action);
   });
 };
 
-export const updateTodolistTitleThunk = (todolistId: string, title: string) => (
-  dispatch: Dispatch<ActionTodolistsTypes>
-) => {
+export const updateTodolistTitleThunk = (
+  todolistId: string,
+  title: string
+): ThunkType => (dispatch) => {
   todolistsAPI.updateTodolist(todolistId, title).then((res) => {
     const action = updateTodolistTitleAC(todolistId, title);
     dispatch(action);
