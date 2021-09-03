@@ -1,8 +1,8 @@
 import { ActionTodolistsTypes, SetTodosType } from "./todolistsReducer";
-import { Dispatch } from "redux";
 import { TaskStateType } from "./TodolistsList ";
 import { TaskType, todolistsAPI, UpdateTaskType } from "../../api/todolistsAPI";
-import { AppActionsType, AppRootStateType, ThunkType } from "../../App/store";
+import { AppRootStateType, ThunkType } from "../../App/store";
+import { setAppErrorAC, setAppStatusAC } from "../../App/appReducer";
 
 const initialState: TaskStateType = {};
 
@@ -108,10 +108,11 @@ export const setTasksAC = (tasks: TaskType[], todolistId: string) => {
 export const fetchTasksThunk = (todolistId: string): ThunkType => (
   dispatch
 ) => {
+  dispatch(setAppStatusAC("loading"));
   todolistsAPI.getTasks(todolistId).then((res) => {
+    dispatch(setAppStatusAC("succeeded"));
     const tasks = res.data.items;
-    const action = setTasksAC(tasks, todolistId);
-    dispatch(action);
+    dispatch(setTasksAC(tasks, todolistId));
   });
 };
 
@@ -119,19 +120,30 @@ export const removeTaskThunk = (
   taskId: string,
   todolistId: string
 ): ThunkType => (dispatch) => {
+  dispatch(setAppStatusAC("loading"));
   todolistsAPI.deleteTask(todolistId, taskId).then((res) => {
-    const action = removeTaskAC(taskId, todolistId);
-    dispatch(action);
+    dispatch(setAppStatusAC("succeeded"));
+    dispatch(removeTaskAC(taskId, todolistId));
   });
 };
 
 export const addTaskThunk = (todolistId: string, title: string): ThunkType => (
   dispatch
 ) => {
+  dispatch(setAppStatusAC("loading"));
   todolistsAPI.postTask(todolistId, title).then((res) => {
-    const task = res.data.data.item;
-    const action = addTaskAC(task);
-    dispatch(action);
+    if (res.data.resultCode === 0) {
+      const task = res.data.data.item;
+      dispatch(addTaskAC(task));
+      dispatch(setAppStatusAC("succeeded"));
+    } else {
+      if (res.data.messages.length) {
+        dispatch(setAppErrorAC(res.data.messages[0]));
+      } else {
+        dispatch(setAppErrorAC("Some error occurred"));
+      }
+      dispatch(setAppStatusAC("failed"));
+    }
   });
 };
 
@@ -146,7 +158,6 @@ export const updateTaskThunk = (
     return t.id === taskId;
   });
   if (!task) {
-    console.log("No data");
     return;
   }
   const apiModel: UpdateTaskType = {
@@ -159,8 +170,7 @@ export const updateTaskThunk = (
     ...model,
   };
   todolistsAPI.updateTask(todolistId, taskId, apiModel).then(() => {
-    const action = updateTaskAC(taskId, model, todolistId);
-    dispatch(action);
+    dispatch(updateTaskAC(taskId, model, todolistId));
   });
 };
 

@@ -1,9 +1,9 @@
 import React, { ChangeEvent, KeyboardEvent } from "react";
-import { Button } from "./../Buttons/Button";
 import { useState } from "react";
-import { Input } from "../Input/Input";
-import { FaPlus } from "react-icons/fa";
 import styles from "./AddItem.module.scss";
+import TextField from "@material-ui/core/TextField";
+import IconButton from "@material-ui/core/IconButton/IconButton";
+import { AddBox } from "@material-ui/icons";
 
 type PropsType = {
   callback: (title: string) => void;
@@ -38,18 +38,23 @@ export const AddItem: React.FC<PropsType> = React.memo(({ callback }) => {
 
   return (
     <div className={styles.wrapper}>
-      <Input
-        className={styles.input}
+      <TextField
+        className={styles.textField}
+        variant="outlined"
         error={error}
         value={newTaskTitle}
         onChange={onChangeHandler}
         onKeyPress={onKeyPressHandler}
+        label="Title"
+        helperText={error}
       />
-
-      <Button title="Add" className={styles.btnAdd} onClick={onClickHandler}>
-        <FaPlus />
-      </Button>
-
+      <IconButton
+        color="primary"
+        className={styles.btnAdd}
+        onClick={onClickHandler}
+      >
+        <AddBox />
+      </IconButton>
       {error && (
         <span className={error ? styles.errorMessage : ""}>
           "Title is required!"
@@ -58,3 +63,62 @@ export const AddItem: React.FC<PropsType> = React.memo(({ callback }) => {
     </div>
   );
 });
+
+// import {
+//   Box,
+//   Button,
+//   FormControl,
+//   IconButton,
+//   TextField,
+// } from "@material-ui/core";
+// import { AddBox } from "@material-ui/icons";
+
+// type AddItemFormPropsType = {
+//   addItem: (title: string) => void;
+// };
+
+// export const AddItemForm = React.memo(function (props: AddItemFormPropsType) {
+//   console.log("AddItemForm called");
+
+//   let [title, setTitle] = useState("");
+//   let [error, setError] = useState<string | null>(null);
+
+//   const addItem = () => {
+//     if (title.trim() !== "") {
+//       props.addItem(title);
+//       setTitle("");
+//     } else {
+//       setError("Title is required");
+//     }
+//   };
+
+//   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+//     setTitle(e.currentTarget.value);
+//   };
+
+//   const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+//     if (error !== null) {
+//       setError(null);
+//     }
+//     if (e.charCode === 13) {
+//       addItem();
+//     }
+//   };
+
+//   return (
+//     <div>
+//       <TextField
+//         variant="outlined"
+//         error={!!error}
+//         value={title}
+//         onChange={onChangeHandler}
+//         onKeyPress={onKeyPressHandler}
+//         label="Title"
+//         helperText={error}
+//       />
+//       <IconButton color="primary" onClick={addItem}>
+//         <AddBox />
+//       </IconButton>
+//     </div>
+//   );
+// });

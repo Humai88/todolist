@@ -17,6 +17,7 @@ const initialGlobalState = {
       order: 2,
       title: "TypeScript",
       filter: "All",
+      entityStatus: "idle",
     },
   ],
   tasks: {
@@ -48,6 +49,10 @@ const initialGlobalState = {
         startDate: "",
       },
     ],
+  },
+  app: {
+    status: "idle",
+    error: null,
   },
 };
 

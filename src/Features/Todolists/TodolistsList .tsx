@@ -53,7 +53,7 @@ export const TodolistsList = () => {
   );
 
   useEffect(() => {
-    dispatch(fetchTodolistsThunk);
+    dispatch(fetchTodolistsThunk());
   }, []);
 
   const changeTodoListTitle = useCallback(
@@ -106,13 +106,14 @@ export const TodolistsList = () => {
           return (
             <Grid key={tl.id}>
               <Paper
-                style={{ padding: "1rem", backgroundColor: "#202d47" }}
+                // style={{ padding: "1rem", backgroundColor: "#9DDAC6" }}
                 elevation={0}
                 variant="outlined"
                 className={styles.paper}
               >
                 <Todolist
                   key={tl.id}
+                  entityStatus={tl.entityStatus}
                   id={tl.id}
                   filter={tl.filter}
                   title={tl.title}

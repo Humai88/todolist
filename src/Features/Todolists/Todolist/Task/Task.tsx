@@ -1,10 +1,10 @@
 import React, { ChangeEvent, useCallback } from "react";
-
 import { EditableSpan } from "../../../../Components/EditableSpan/EditableSpan";
-import { FaTrash } from "react-icons/fa";
 import styles from "./Task.module.scss";
 import { TaskStatuses, TaskType } from "../../../../api/todolistsAPI";
-import SuperCheckbox from "../../../../Components/Checkbox/SuperCheckbox";
+import Checkbox from "@material-ui/core/Checkbox/Checkbox";
+import IconButton from "@material-ui/core/IconButton/IconButton";
+import { Delete } from "@material-ui/icons";
 
 type TaskPropsType = {
   changeTaskTitle: (taskId: string, title: string, todoListId: string) => void;
@@ -48,20 +48,20 @@ export const Task: React.FC<TaskPropsType> = React.memo((props) => {
   return (
     <li className={task.status === TaskStatuses.Completed ? styles.isDone : ""}>
       <div className={styles.wrapper}>
-        <SuperCheckbox
+        <Checkbox
           checked={task.status === TaskStatuses.Completed}
           onChange={onCheckboxChangeHandler}
-        >
-          <EditableSpan
-            className={styles.span}
-            changeTaskTitle={changeTaskTitleHandler}
-            title={task.title}
-          />
-        </SuperCheckbox>
+        />
 
-        <div className={styles.trash} onClick={onRemoveHandler}>
-          <FaTrash />
-        </div>
+        <EditableSpan
+          className={styles.span}
+          changeTaskTitle={changeTaskTitleHandler}
+          title={task.title}
+        />
+
+        <IconButton className={styles.trash} onClick={onRemoveHandler}>
+          <Delete />
+        </IconButton>
       </div>
     </li>
   );

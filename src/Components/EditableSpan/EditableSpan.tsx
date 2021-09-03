@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, KeyboardEvent } from "react";
-// import TextField from "@material-ui/core/TextField";
+import TextField from "@material-ui/core/TextField";
 import styles from "./EditableSpan.module.scss";
 
 type PropsType = {
@@ -35,7 +35,7 @@ export const EditableSpan: React.FC<PropsType> = React.memo(
     };
 
     return editMode ? (
-      <input
+      <TextField
         className={styles.input}
         autoFocus
         onChange={onChangeHandler}

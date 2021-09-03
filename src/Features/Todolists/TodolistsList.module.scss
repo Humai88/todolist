@@ -1,5 +1,8 @@
+@import "./../../scss/global.scss";
 .paper {
   margin: 1rem;
+  background: $color-paper !important;
+  padding: 1rem;
 }
 .addItem {
   margin: 1rem;

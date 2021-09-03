@@ -6,9 +6,13 @@
 }
 body {
   color: $color-body;
+  background-color: $color-mainbg;
 }
 
 .navbar {
-  background-color: $color-background-dark;
+  background-color: $color-navbar;
   color: $color-body !important;
+}
+.container {
+  padding-top: 1.5rem;
 }

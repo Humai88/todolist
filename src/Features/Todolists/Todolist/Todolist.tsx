@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from "react";
-import { Button } from "../../../Components/Buttons/Button";
+// import { Button } from "../../../Components/Buttons/Button";
 import { AddItem } from "../../../Components/AddItem/AddItem";
 import styles from "./Todolist.module.scss";
 import { EditableSpan } from "../../../Components/EditableSpan/EditableSpan";
@@ -8,6 +8,10 @@ import { TaskStatuses, TaskType } from "../../../api/todolistsAPI";
 import { useDispatch } from "react-redux";
 import { FilterValuesType } from "../todolistsReducer";
 import { fetchTasksThunk } from "../tasksReducer";
+import { RequestStatusType } from "../../../App/appReducer";
+import Button from "@material-ui/core/Button/Button";
+import IconButton from "@material-ui/core/IconButton/IconButton";
+import { Delete } from "@material-ui/icons";
 
 type PropsType = {
   title: string;
@@ -25,6 +29,7 @@ type PropsType = {
   removeTodoList: (todoListId: string) => void;
   changeTaskTitle: (taskId: string, title: string, todoListId: string) => void;
   changeTodoListTitle: (todoListId: string, title: string) => void;
+  entityStatus: RequestStatusType;
 };
 
 export const Todolist: React.FC<PropsType> = React.memo((props) => {
@@ -40,6 +45,7 @@ export const Todolist: React.FC<PropsType> = React.memo((props) => {
     removeTodoList,
     changeTaskTitle,
     changeTodoListTitle,
+    entityStatus,
   } = props;
   const dispatch = useDispatch();
   const onAllClickHandler = useCallback(() => changeFilter("All", id), [
@@ -58,6 +64,7 @@ export const Todolist: React.FC<PropsType> = React.memo((props) => {
   );
 
   const onClickHandler = () => removeTodoList(id);
+
   const addTaskItem = useCallback(
     (title: string) => {
       addTask(title, id);
@@ -84,16 +91,16 @@ export const Todolist: React.FC<PropsType> = React.memo((props) => {
     dispatch(fetchTasksThunk(id));
   }, []);
   return (
-    <div className={styles.wrapper}>
-      <EditableSpan
-        className={styles.header}
-        title={title}
-        changeTaskTitle={changeTodolistTitleHandler}
-      />
-
+    <div>
+      <h3>
+        <EditableSpan
+          className={styles.span}
+          title={title}
+          changeTaskTitle={changeTodolistTitleHandler}
+        />
+      </h3>
       <AddItem callback={addTaskItem} />
-
-      <ul>
+      <div>
         {tasksForTodoList.map((t) => (
           <Task
             changeTaskTitle={changeTaskTitle}
@@ -104,38 +111,35 @@ export const Todolist: React.FC<PropsType> = React.memo((props) => {
             key={t.id}
           />
         ))}
-      </ul>
-
+      </div>
       <div className={styles.btnsWrapper}>
         <Button
-          className={styles.filterBtns}
-          filter={filter}
-          title="All"
+          className={styles.btn}
+          variant={filter === "All" ? "contained" : "text"}
           onClick={onAllClickHandler}
+          color={"secondary"}
         >
           All
         </Button>
         <Button
-          className={styles.filterBtns}
-          filter={filter}
-          title="Active"
+          className={styles.btn}
+          variant={filter === "Active" ? "contained" : "text"}
           onClick={onActiveClickHandler}
+          color={"secondary"}
         >
           Active
         </Button>
         <Button
-          className={styles.filterBtns}
-          filter={filter}
-          title="Completed"
+          className={styles.btn}
+          variant={filter === "Completed" ? "contained" : "text"}
           onClick={onCompletedClickHandler}
+          color={"secondary"}
         >
           Completed
         </Button>
-
         <Button
-          className={styles.filterBtns}
-          title="RemoveAll"
-          red
+          className={styles.deleteBtn}
+          disabled={entityStatus === "loading"}
           onClick={onClickHandler}
         >
           Remove all

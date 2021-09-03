@@ -1,7 +1,11 @@
 import { todolistsAPI, TodolistType } from "./../../api/todolistsAPI";
 import { v1 } from "uuid";
-import { Dispatch } from "redux";
-import { AppActionsType, ThunkType } from "../../App/store";
+import { ThunkType } from "../../App/store";
+import {
+  RequestStatusType,
+  setAppErrorAC,
+  setAppStatusAC,
+} from "../../App/appReducer";
 
 // For tests
 export const todoListId_1 = v1();
@@ -27,6 +31,7 @@ export const todolistsReducer = (
         {
           ...action.payload.todolist,
           filter: "All",
+          entityStatus: "idle",
         },
         ...state,
       ];
@@ -38,8 +43,14 @@ export const todolistsReducer = (
       );
     case "SET_TODOLISTS":
       return action.payload.todos.map((tl) => {
-        return { ...tl, filter: "All" };
+        return { ...tl, filter: "All", entityStatus: "idle" };
       });
+    case "CHANGE_ENTITY_STATUS":
+      return state.map((tl) =>
+        tl.id === action.payload.id
+          ? { ...tl, entityStatus: action.payload.entityStatus }
+          : tl
+      );
     default:
       return state;
   }
@@ -88,28 +99,63 @@ export const setTodolistsAC = (todos: TodolistType[]) => {
     },
   } as const;
 };
+export const chandeTodolistEntityStatusAC = (
+  id: string,
+  entityStatus: RequestStatusType
+) => {
+  return {
+    type: "CHANGE_ENTITY_STATUS",
+    payload: {
+      id,
+      entityStatus,
+    },
+  } as const;
+};
 
 // Thunks
-export const fetchTodolistsThunk = (dispatch: Dispatch<AppActionsType>) => {
+
+export const fetchTodolistsThunk = (): ThunkType => (dispatch) => {
+  dispatch(setAppStatusAC("loading"));
   todolistsAPI.getTodolists().then((res) => {
-    const action = setTodolistsAC(res.data);
-    dispatch(action);
+    dispatch(setAppStatusAC("succeeded"));
+    dispatch(setTodolistsAC(res.data));
   });
 };
 
 export const removeTodolistThunk = (todolistId: string): ThunkType => (
   dispatch
 ) => {
+  dispatch(setAppStatusAC("loading"));
+  dispatch(chandeTodolistEntityStatusAC(todolistId, "loading"));
   todolistsAPI.deleteTodolist(todolistId).then((res) => {
-    const action = removeTodolistAC(todolistId);
-    dispatch(action);
+    if (res.data.resultCode === 0) {
+      dispatch(setAppStatusAC("succeeded"));
+      dispatch(removeTodolistAC(todolistId));
+    } else {
+      if (res.data.messages.length) {
+        dispatch(setAppErrorAC(res.data.messages[0]));
+      } else {
+        dispatch(setAppErrorAC("Some error occurred"));
+      }
+      dispatch(setAppStatusAC("failed"));
+    }
   });
 };
 
 export const addTodolistsThunk = (title: string): ThunkType => (dispatch) => {
+  dispatch(setAppStatusAC("loading"));
   todolistsAPI.postTodolist(title).then((res) => {
-    const action = addTodolistAC(res.data.data.item);
-    dispatch(action);
+    if (res.data.resultCode == 0) {
+      dispatch(addTodolistAC(res.data.data.item));
+      dispatch(setAppStatusAC("succeeded"));
+    } else {
+      if (res.data.messages.length) {
+        dispatch(setAppErrorAC(res.data.messages[0]));
+      } else {
+        dispatch(setAppErrorAC("Some error occurred"));
+      }
+      dispatch(setAppStatusAC("failed"));
+    }
   });
 };
 
@@ -118,8 +164,7 @@ export const updateTodolistTitleThunk = (
   title: string
 ): ThunkType => (dispatch) => {
   todolistsAPI.updateTodolist(todolistId, title).then((res) => {
-    const action = updateTodolistTitleAC(todolistId, title);
-    dispatch(action);
+    dispatch(updateTodolistTitleAC(todolistId, title));
   });
 };
 
@@ -129,10 +174,12 @@ export type ActionTodolistsTypes =
   | ReturnType<typeof removeTodolistAC>
   | ReturnType<typeof changeFilterAC>
   | ReturnType<typeof updateTodolistTitleAC>
-  | ReturnType<typeof setTodolistsAC>;
+  | ReturnType<typeof setTodolistsAC>
+  | ReturnType<typeof chandeTodolistEntityStatusAC>;
 
 export type SetTodosType = ReturnType<typeof setTodolistsAC>;
 export type TodoListEntityType = TodolistType & {
   filter: FilterValuesType;
+  entityStatus: RequestStatusType;
 };
 export type FilterValuesType = "All" | "Completed" | "Active";

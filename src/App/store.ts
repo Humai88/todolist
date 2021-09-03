@@ -8,10 +8,12 @@ import {
   ActionTodolistsTypes,
   todolistsReducer,
 } from "../Features/Todolists/todolistsReducer";
+import { ActionAppTypes, appReducer } from "./appReducer";
 
 const rootReducer = combineReducers({
   tasks: tasksReducer,
   todolists: todolistsReducer,
+  app: appReducer,
 });
 
 export type AppRootStateType = ReturnType<typeof rootReducer>;
@@ -23,6 +25,9 @@ export type ThunkType = ThunkAction<
   AppActionsType
 >;
 // All action types
-export type AppActionsType = ActionTasksTypes | ActionTodolistsTypes;
+export type AppActionsType =
+  | ActionTasksTypes
+  | ActionTodolistsTypes
+  | ActionAppTypes;
 // @ts-ignore
 window.store = store;
