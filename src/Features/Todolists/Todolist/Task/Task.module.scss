@@ -8,6 +8,7 @@ li {
   color: $color-navbar;
 }
 .wrapper {
+  max-width: 70%;
   display: flex;
   justify-content: space-between;
   align-items: center;

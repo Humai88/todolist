@@ -1,12 +1,11 @@
 @import "./../../scss/global.scss";
 .errorMessage {
   display: block;
-
   text-transform: uppercase;
 }
 .textField {
   input {
-    color: $color-white !important;
+    color: $color-body !important;
   }
   label {
     font-size: 1.3rem;
