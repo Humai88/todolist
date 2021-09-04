@@ -6,10 +6,11 @@ type PropsType = {
   title: string;
   changeTaskTitle: (title: string) => void;
   className?: string;
+  disabled?: boolean;
 };
 
 export const EditableSpan: React.FC<PropsType> = React.memo(
-  ({ title, changeTaskTitle, className }) => {
+  ({ title, changeTaskTitle, className, disabled }) => {
     const [editMode, setEditMode] = useState<boolean>(false);
     const [value, setValue] = useState<string>(title);
 
@@ -42,6 +43,7 @@ export const EditableSpan: React.FC<PropsType> = React.memo(
         onBlur={offEditMode}
         value={value}
         onKeyPress={onKeyPressHandler}
+        disabled={disabled}
       />
     ) : (
       <span className={className} onDoubleClick={onEditMode}>

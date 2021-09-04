@@ -33,6 +33,7 @@ const initialGlobalState = {
         order: 1,
         addedDate: "",
         startDate: "",
+        entityStatus: "idle",
       },
     ],
     ["todolistId2"]: [
@@ -47,6 +48,7 @@ const initialGlobalState = {
         order: 1,
         addedDate: "",
         startDate: "",
+        entityStatus: "idle",
       },
     ],
   },

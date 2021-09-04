@@ -1,4 +1,5 @@
 import axios from "axios";
+import { RequestStatusType } from "../App/appReducer";
 
 const instance = axios.create({
   baseURL: "https://social-network.samuraijs.com/api/1.1/",
@@ -59,7 +60,7 @@ export type TodolistType = {
   order: number;
   title: string;
 };
-type ResponseType<D = {}> = {
+export type ResponseType<D = {}> = {
   resultCode: number;
   messages: Array<string>;
   data: D;
@@ -88,6 +89,7 @@ export type TaskType = {
   todoListId: string;
   order: number;
   addedDate: string;
+  entityStatus: RequestStatusType;
 };
 export type UpdateTaskType = {
   description: string;

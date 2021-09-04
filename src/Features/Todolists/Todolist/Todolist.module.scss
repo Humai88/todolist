@@ -23,6 +23,12 @@ ul {
   span {
     color: $color-text;
   }
+  &:disabled {
+    opacity: 0.7;
+    span {
+      color: $color-white !important;
+    }
+  }
   &:hover {
     background-color: $color-deleteBtn-hover !important;
     span {

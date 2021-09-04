@@ -10,8 +10,15 @@
   label {
     font-size: 1.3rem;
   }
+  &:disabled {
+    opacity: 0.6;
+  }
 }
-
+.btnAdd {
+  &:disabled {
+    opacity: 0.6;
+  }
+}
 .wrapper {
   // display: grid;
   // margin-top: 1rem;

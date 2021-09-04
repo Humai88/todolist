@@ -7,62 +7,67 @@ import { AddBox } from "@material-ui/icons";
 
 type PropsType = {
   callback: (title: string) => void;
+  disabled?: boolean;
 };
-export const AddItem: React.FC<PropsType> = React.memo(({ callback }) => {
-  const [newTaskTitle, setNewTaskTitle] = useState<string>("");
-  const [error, setError] = useState<boolean>(false);
+export const AddItem: React.FC<PropsType> = React.memo(
+  ({ callback, disabled }) => {
+    const [newTaskTitle, setNewTaskTitle] = useState<string>("");
+    const [error, setError] = useState<boolean>(false);
 
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setNewTaskTitle(e.currentTarget.value);
-    setError(false);
-  };
-
-  const onClickHandler = () => {
-    if (newTaskTitle.trim() !== "") {
-      callback(newTaskTitle.trim());
-      setNewTaskTitle("");
-    } else {
-      setError(true);
-    }
-  };
-
-  const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (error) {
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+      setNewTaskTitle(e.currentTarget.value);
       setError(false);
-    }
+    };
 
-    if (e.key === "Enter") {
-      onClickHandler();
-    }
-  };
+    const onClickHandler = () => {
+      if (newTaskTitle.trim() !== "") {
+        callback(newTaskTitle.trim());
+        setNewTaskTitle("");
+      } else {
+        setError(true);
+      }
+    };
 
-  return (
-    <div className={styles.wrapper}>
-      <TextField
-        className={styles.textField}
-        variant="outlined"
-        error={error}
-        value={newTaskTitle}
-        onChange={onChangeHandler}
-        onKeyPress={onKeyPressHandler}
-        label="Title"
-        helperText={error}
-      />
-      <IconButton
-        color="primary"
-        className={styles.btnAdd}
-        onClick={onClickHandler}
-      >
-        <AddBox />
-      </IconButton>
-      {error && (
-        <span className={error ? styles.errorMessage : ""}>
-          "Title is required!"
-        </span>
-      )}
-    </div>
-  );
-});
+    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+      if (error) {
+        setError(false);
+      }
+
+      if (e.key === "Enter") {
+        onClickHandler();
+      }
+    };
+
+    return (
+      <div className={styles.wrapper}>
+        <TextField
+          className={styles.textField}
+          variant="outlined"
+          error={error}
+          value={newTaskTitle}
+          onChange={onChangeHandler}
+          onKeyPress={onKeyPressHandler}
+          label="Title"
+          helperText={error}
+          disabled={disabled}
+        />
+        <IconButton
+          color="primary"
+          className={styles.btnAdd}
+          onClick={onClickHandler}
+          disabled={disabled}
+        >
+          <AddBox />
+        </IconButton>
+        {error && (
+          <span className={error ? styles.errorMessage : ""}>
+            "Title is required!"
+          </span>
+        )}
+      </div>
+    );
+  }
+);
 
 // import {
 //   Box,

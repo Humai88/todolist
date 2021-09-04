@@ -1,5 +1,5 @@
-import { TaskStateType } from "../App/App";
 import { tasksReducer } from "./tasksReducer";
+import { TaskStateType } from "./TodolistsList ";
 import {
   addTodolistAC,
   removeTodolistAC,

@@ -5,8 +5,6 @@ const initialState = {
   error: null as null | string,
 };
 
-type InitialStateType = typeof initialState;
-
 export const appReducer = (
   state: InitialStateType = initialState,
   action: ActionAppTypes
@@ -38,6 +36,8 @@ export const setAppErrorAC = (error: null | string) => {
   } as const;
 };
 
-export type ActionAppTypes =
-  | ReturnType<typeof setAppStatusAC>
-  | ReturnType<typeof setAppErrorAC>;
+// Types
+export type SetAppErrorActionType = ReturnType<typeof setAppErrorAC>;
+export type SetAppStatusActionType = ReturnType<typeof setAppStatusAC>;
+export type ActionAppTypes = SetAppErrorActionType | SetAppStatusActionType;
+export type InitialStateType = typeof initialState;

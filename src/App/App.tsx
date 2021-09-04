@@ -28,7 +28,9 @@ function App() {
           <Typography variant="h6">TodoShka</Typography>
           <Button color="inherit">Login</Button>
         </Toolbar>
-        {status === "loading" && <LinearProgress color="secondary" />}
+        {status === "loading" && (
+          <LinearProgress className={styles.progress} color="secondary" />
+        )}
       </AppBar>
       <Container className={styles.container} maxWidth="xl">
         <TodolistsList />

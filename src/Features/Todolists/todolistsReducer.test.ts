@@ -6,6 +6,7 @@ import {
   FilterValuesType,
   TodoListEntityType,
   updateTodolistTitleAC,
+  chandeTodolistEntityStatusAC,
 } from "./todolistsReducer";
 import { v1 } from "uuid";
 
@@ -18,9 +19,32 @@ beforeEach(() => {
   todolistId2 = v1();
 
   startState = [
-    { id: todolistId1, addedDate: "", order: 1, title: "React", filter: "All" },
-    { id: todolistId2, addedDate: "", order: 1, title: "CSS", filter: "All" },
+    {
+      id: todolistId1,
+      addedDate: "",
+      order: 1,
+      entityStatus: "idle",
+      title: "React",
+      filter: "All",
+    },
+    {
+      id: todolistId2,
+      addedDate: "",
+      order: 1,
+      entityStatus: "idle",
+      title: "CSS",
+      filter: "All",
+    },
   ];
+});
+
+test("correct todolist should change status during deletion", () => {
+  const endState = todolistsReducer(
+    startState,
+    chandeTodolistEntityStatusAC(todolistId1, "loading")
+  );
+  expect(endState[0].entityStatus).toBe("loading");
+  expect(endState[1].entityStatus).toBe("idle");
 });
 
 test("correct todolist should be removed", () => {

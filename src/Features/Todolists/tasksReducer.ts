@@ -2,7 +2,11 @@ import { ActionTodolistsTypes, SetTodosType } from "./todolistsReducer";
 import { TaskStateType } from "./TodolistsList ";
 import { TaskType, todolistsAPI, UpdateTaskType } from "../../api/todolistsAPI";
 import { AppRootStateType, ThunkType } from "../../App/store";
-import { setAppErrorAC, setAppStatusAC } from "../../App/appReducer";
+import { RequestStatusType, setAppStatusAC } from "../../App/appReducer";
+import {
+  handleServerAppError,
+  handleServerNetworkError,
+} from "../../utils/errorUtils";
 
 const initialState: TaskStateType = {};
 
@@ -39,7 +43,15 @@ export const tasksReducer = (
           (t) => t.id !== action.payload.taskId
         ),
       };
-
+    case "TASK/CHANGE_ENTITY_STATUS":
+      return {
+        ...state,
+        [action.payload.todolistId]: state[action.payload.todolistId].map((t) =>
+          t.id === action.payload.taskId
+            ? { ...t, entityStatus: action.payload.entityStatus }
+            : t
+        ),
+      };
     case "UPDATE_TASK":
       return {
         ...state,
@@ -103,7 +115,20 @@ export const setTasksAC = (tasks: TaskType[], todolistId: string) => {
     },
   } as const;
 };
-
+export const chandeTaskEntityStatusAC = (
+  taskId: string,
+  todolistId: string,
+  entityStatus: RequestStatusType
+) => {
+  return {
+    type: "TASK/CHANGE_ENTITY_STATUS",
+    payload: {
+      taskId,
+      todolistId,
+      entityStatus,
+    },
+  } as const;
+};
 // Thunks
 export const fetchTasksThunk = (todolistId: string): ThunkType => (
   dispatch
@@ -121,30 +146,40 @@ export const removeTaskThunk = (
   todolistId: string
 ): ThunkType => (dispatch) => {
   dispatch(setAppStatusAC("loading"));
-  todolistsAPI.deleteTask(todolistId, taskId).then((res) => {
-    dispatch(setAppStatusAC("succeeded"));
-    dispatch(removeTaskAC(taskId, todolistId));
-  });
+  dispatch(chandeTaskEntityStatusAC(taskId, todolistId, "loading"));
+  todolistsAPI
+    .deleteTask(todolistId, taskId)
+    .then((res) => {
+      if (res.data.resultCode == 0) {
+        dispatch(setAppStatusAC("succeeded"));
+        dispatch(removeTaskAC(taskId, todolistId));
+      } else {
+        handleServerAppError(res.data, dispatch);
+      }
+    })
+    .catch((error) => {
+      handleServerNetworkError(error, dispatch);
+    });
 };
 
 export const addTaskThunk = (todolistId: string, title: string): ThunkType => (
   dispatch
 ) => {
   dispatch(setAppStatusAC("loading"));
-  todolistsAPI.postTask(todolistId, title).then((res) => {
-    if (res.data.resultCode === 0) {
-      const task = res.data.data.item;
-      dispatch(addTaskAC(task));
-      dispatch(setAppStatusAC("succeeded"));
-    } else {
-      if (res.data.messages.length) {
-        dispatch(setAppErrorAC(res.data.messages[0]));
+  todolistsAPI
+    .postTask(todolistId, title)
+    .then((res) => {
+      if (res.data.resultCode === 0) {
+        const task = res.data.data.item;
+        dispatch(addTaskAC(task));
+        dispatch(setAppStatusAC("succeeded"));
       } else {
-        dispatch(setAppErrorAC("Some error occurred"));
+        handleServerAppError(res.data, dispatch);
       }
-      dispatch(setAppStatusAC("failed"));
-    }
-  });
+    })
+    .catch((error) => {
+      handleServerNetworkError(error, dispatch);
+    });
 };
 
 export const updateTaskThunk = (
@@ -169,9 +204,18 @@ export const updateTaskThunk = (
     status: task.status,
     ...model,
   };
-  todolistsAPI.updateTask(todolistId, taskId, apiModel).then(() => {
-    dispatch(updateTaskAC(taskId, model, todolistId));
-  });
+  todolistsAPI
+    .updateTask(todolistId, taskId, apiModel)
+    .then((res) => {
+      if (res.data.resultCode == 0) {
+        dispatch(updateTaskAC(taskId, model, todolistId));
+      } else {
+        handleServerAppError(res.data, dispatch);
+      }
+    })
+    .catch((error) => {
+      handleServerNetworkError(error, dispatch);
+    });
 };
 
 // Types
@@ -181,7 +225,8 @@ export type ActionTasksTypes =
   | ActionTodolistsTypes
   | SetTodosType
   | ReturnType<typeof setTasksAC>
-  | ReturnType<typeof updateTaskAC>;
+  | ReturnType<typeof updateTaskAC>
+  | ReturnType<typeof chandeTaskEntityStatusAC>;
 
 type UpdateTaskModelType = {
   description?: string;

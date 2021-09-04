@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect } from "react";
-// import { Button } from "../../../Components/Buttons/Button";
 import { AddItem } from "../../../Components/AddItem/AddItem";
 import styles from "./Todolist.module.scss";
 import { EditableSpan } from "../../../Components/EditableSpan/EditableSpan";
@@ -10,8 +9,6 @@ import { FilterValuesType } from "../todolistsReducer";
 import { fetchTasksThunk } from "../tasksReducer";
 import { RequestStatusType } from "../../../App/appReducer";
 import Button from "@material-ui/core/Button/Button";
-import IconButton from "@material-ui/core/IconButton/IconButton";
-import { Delete } from "@material-ui/icons";
 
 type PropsType = {
   title: string;
@@ -97,12 +94,14 @@ export const Todolist: React.FC<PropsType> = React.memo((props) => {
           className={styles.span}
           title={title}
           changeTaskTitle={changeTodolistTitleHandler}
+          disabled={entityStatus === "loading"}
         />
       </h3>
-      <AddItem callback={addTaskItem} />
+      <AddItem callback={addTaskItem} disabled={entityStatus === "loading"} />
       <div>
         {tasksForTodoList.map((t) => (
           <Task
+            entityStatus={t.entityStatus}
             changeTaskTitle={changeTaskTitle}
             removeTask={removeTask}
             checkboxChange={checkboxChange}
