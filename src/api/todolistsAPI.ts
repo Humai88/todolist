@@ -17,7 +17,7 @@ export const todolistsAPI = {
   },
   postTodolist(title: string) {
     return instance.post<ResponseType<{ item: TodolistType }>>(`todo-lists`, {
-      title: title,
+      title,
     });
   },
   deleteTodolist(todolistId: string) {
@@ -25,7 +25,7 @@ export const todolistsAPI = {
   },
   updateTodolist(todolistId: string, title: string) {
     return instance.put<ResponseType>(`todo-lists/${todolistId}`, {
-      title: title,
+      title,
     });
   },
   //Tasks api
@@ -36,7 +36,7 @@ export const todolistsAPI = {
     return instance.post<ResponseType<{ item: TaskType }>>(
       `todo-lists/${todolistId}/tasks`,
       {
-        title: title,
+        title,
       }
     );
   },
@@ -52,8 +52,25 @@ export const todolistsAPI = {
     );
   },
 };
+export const authAPI = {
+  login(data: LoginParamsType) {
+    return instance.post<ResponseType<{ userId: number }>>(`auth/login`, data);
+  },
+  logout() {
+    return instance.delete<ResponseType>(`auth/login`);
+  },
+  authMe() {
+    return instance.get<ResponseType<LoginParamsType>>(`auth/me`);
+  },
+};
 
 // Types
+export type LoginParamsType = {
+  email: string;
+  password: string;
+  rememberMe: boolean;
+  captcha?: string;
+};
 export type TodolistType = {
   id: string;
   addedDate: string;

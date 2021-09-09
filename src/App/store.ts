@@ -1,6 +1,10 @@
 import { applyMiddleware, combineReducers, createStore } from "redux";
 import thunk, { ThunkAction } from "redux-thunk";
 import {
+  AuthActionsType,
+  authReducer,
+} from "../Features/Todolists/Login/authReducer";
+import {
   ActionTasksTypes,
   tasksReducer,
 } from "../Features/Todolists/tasksReducer";
@@ -14,6 +18,7 @@ const rootReducer = combineReducers({
   tasks: tasksReducer,
   todolists: todolistsReducer,
   app: appReducer,
+  auth: authReducer,
 });
 
 export type AppRootStateType = ReturnType<typeof rootReducer>;
@@ -28,6 +33,7 @@ export type ThunkType = ThunkAction<
 export type AppActionsType =
   | ActionTasksTypes
   | ActionTodolistsTypes
-  | ActionAppTypes;
+  | ActionAppTypes
+  | AuthActionsType;
 // @ts-ignore
 window.store = store;

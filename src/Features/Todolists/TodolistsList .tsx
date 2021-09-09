@@ -16,6 +16,7 @@ import {
   updateTodolistTitleThunk,
 } from "./todolistsReducer";
 import styles from "./TodolistsList.module.scss";
+import { Redirect } from "react-router-dom";
 
 export type TaskStateType = {
   [key: string]: Array<TaskType>;
@@ -28,7 +29,9 @@ export const TodolistsList = () => {
   const todolists = useSelector<AppRootStateType, TodoListEntityType[]>(
     (state) => state.todolists
   );
-
+  const isLoggedIn = useSelector<AppRootStateType, boolean>(
+    (state) => state.auth.isLoggedIn
+  );
   // TDlists functions
   const changeFilter = useCallback(
     (value: FilterValuesType, todoListId: string) => {
@@ -53,6 +56,9 @@ export const TodolistsList = () => {
   );
 
   useEffect(() => {
+    if (!isLoggedIn) {
+      return;
+    }
     dispatch(fetchTodolistsThunk());
   }, []);
 
@@ -92,7 +98,9 @@ export const TodolistsList = () => {
     },
     [dispatch]
   );
-
+  if (!isLoggedIn) {
+    return <Redirect to="/login" />;
+  }
   return (
     <>
       <Grid container className={styles.addItem}>

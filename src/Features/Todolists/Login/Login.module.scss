@@ -1,0 +1,30 @@
+@import "./../../../scss/global.scss";
+.form {
+  p {
+    font-size: 1.3rem;
+    color: $color-white;
+  }
+  a {
+    font-size: 1.3rem;
+  }
+}
+.btn {
+  background-color: #c37f9d !important;
+  border-radius: 0px !important;
+  margin-right: 3px !important;
+  span {
+    color: $color-text;
+  }
+  &:hover {
+    background-color: #9c677e !important;
+    span {
+      color: $color-white !important;
+    }
+  }
+  &:focus {
+    background-color: #8f5f74 !important;
+    span {
+      color: $color-white !important;
+    }
+  }
+}
