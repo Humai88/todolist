@@ -74,8 +74,11 @@ function App() {
         <Container className={styles.container} maxWidth="xl">
           <Switch>
             <Route exact path="/todolist" render={() => <TodolistsList />} />
-            <Route exact path="/login" render={() => <Login />} />
-            <Route path={"/404"} render={() => <h1>404: PAGE NOT FOUND</h1>} />
+            <Route exact path="/todolist/login" render={() => <Login />} />
+            <Route
+              path={"/todolist/404"}
+              render={() => <h1>404: PAGE NOT FOUND</h1>}
+            />
             <Redirect from="*" to="/404" />
           </Switch>
         </Container>
