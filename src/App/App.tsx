@@ -13,7 +13,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppRootStateType } from "./store";
 import { initializeAppThunk, RequestStatusType } from "./appReducer";
 import { ErrorSnackbar } from "../Components/ErrorSnackbar/ErrorSnackbar";
-import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter,
+  HashRouter,
+  Redirect,
+  Route,
+  Switch,
+} from "react-router-dom";
 import { Login } from "../Features/Todolists/Login/Login";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { logoutThunk } from "../Features/Todolists/Login/authReducer";
@@ -53,7 +59,7 @@ function App() {
 
   return (
     <React.Fragment>
-      <BrowserRouter>
+      <HashRouter>
         <AppBar position="static">
           <Toolbar className={styles.navbar}>
             <IconButton edge="start" color="inherit" aria-label="menu">
@@ -73,14 +79,14 @@ function App() {
         </AppBar>
         <Container className={styles.container} maxWidth="xl">
           <Switch>
-            <Route exact path="/todolist" render={() => <TodolistsList />} />
+            <Route exact path="/" render={() => <TodolistsList />} />
             <Route exact path="/login" render={() => <Login />} />
             <Route path={"/404"} render={() => <h1>404: PAGE NOT FOUND</h1>} />
             <Redirect from="*" to="/404" />
           </Switch>
         </Container>
         <ErrorSnackbar />
-      </BrowserRouter>
+      </HashRouter>
     </React.Fragment>
   );
 }
