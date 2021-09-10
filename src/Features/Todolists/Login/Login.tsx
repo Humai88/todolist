@@ -49,7 +49,7 @@ export const Login = () => {
   });
 
   if (isLoggedIn) {
-    return <Redirect to="/" />;
+    return <Redirect to="/todolist" />;
   }
   return (
     <Grid container justify="center">
@@ -86,7 +86,7 @@ export const Login = () => {
                 {...formik.getFieldProps("password")}
               />
               {formik.touched.password && formik.errors.email ? (
-                <div style={{ color: "red" }}>{formik.errors.password}</div>
+                <div style={{ color: "#F55F59" }}>{formik.errors.password}</div>
               ) : null}
               <FormControlLabel
                 label={"Remember me"}
