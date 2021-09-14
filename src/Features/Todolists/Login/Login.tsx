@@ -77,7 +77,7 @@ export const Login = () => {
                 {...formik.getFieldProps("email")}
               />
               {formik.touched.email && formik.errors.email ? (
-                <div style={{ color: "red" }}>{formik.errors.email}</div>
+                <div style={{ color: "#F55F59" }}>{formik.errors.email}</div>
               ) : null}
               <TextField
                 type="password"
