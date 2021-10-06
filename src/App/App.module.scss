@@ -12,9 +12,15 @@ body {
 .navbar {
   background-color: $color-navbar;
   color: $color-body !important;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 2.5%;
 }
 .container {
   padding-top: 1.5rem;
 }
 .progress {
 }
+// .logout {
+//   margin-left: 90%;
+// }

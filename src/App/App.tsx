@@ -62,13 +62,14 @@ function App() {
       <HashRouter>
         <AppBar position="static">
           <Toolbar className={styles.navbar}>
-            <IconButton edge="start" color="inherit" aria-label="menu">
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6">TodoShka</Typography>
+            <Typography variant="h6"> Todolist</Typography>
 
             {isLoggedIn && (
-              <Button onClick={logoutHandler} color="inherit">
+              <Button
+                className={styles.logout}
+                onClick={logoutHandler}
+                color="inherit"
+              >
                 Log Out
               </Button>
             )}
