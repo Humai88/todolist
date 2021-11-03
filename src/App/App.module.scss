@@ -6,7 +6,12 @@
 }
 body {
   color: $color-body;
-  background-color: $color-mainbg;
+  // background-color: $color-mainbg;
+  background-image: url("./../assets/bg.webp");
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
 }
 
 .navbar {

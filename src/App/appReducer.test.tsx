@@ -11,6 +11,7 @@ beforeEach(() => {
   startState = {
     error: null,
     status: "idle",
+    isInitialized: true,
   };
 });
 
